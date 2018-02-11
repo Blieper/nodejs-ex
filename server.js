@@ -3,6 +3,8 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
     url     = require('url');
+
+const querystring = require('querystring');
     
 Object.assign=require('object-assign')
 
@@ -109,9 +111,11 @@ app.get('/interface', function (req, res) {
 
   var params = url.parse(req.url);
 
-  console.log(params);
+  var queried = querystring.parse(params.query);
+
+  console.log(queried);
   
-  var jsonString = JSON.stringify(params);
+  var jsonString = JSON.stringify(queried);
 
   console.log("Stringified: " + jsonString);
 
