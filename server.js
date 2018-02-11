@@ -104,6 +104,26 @@ app.get('/hello', function (req, res) {
 
 });
 
+app.get('/api', function (req, res) {
+
+  var params = url.parse(req);
+
+  console.log(params);
+  
+  var jsonString = JSON.stringify(params);
+
+  console.log("Stringified: " + jsonString);
+
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+
+  res.send('Hello world!');
+
+});
+
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
