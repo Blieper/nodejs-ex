@@ -66,6 +66,10 @@ app.get('/', function (req, res) {
   res.render('index.html');
 });
 
+app.get('/pagecount', function (req, res) {
+    res.status(200).send('Fuck off please?');
+});
+
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
