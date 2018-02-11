@@ -104,7 +104,7 @@ app.get('/hello', function (req, res) {
 
 });
 
-app.get('/api', function (req, res) {
+app.get('/interface', function (req, res) {
 
   var params = url.parse(req);
 
