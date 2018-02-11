@@ -106,6 +106,8 @@ app.get('/api', function (req, res) {
   if (!db) {
     initDb(function(err){});
   }
+
+  res.status(200);
 });
 
 // error handling
