@@ -96,37 +96,16 @@ app.get('/pagecount', function (req, res) {
   }
 });
 
-app.get('/hello', function (req, res) {
-  // try to initialize the db on every request if it's not already
-  // initialized.
-  if (!db) {
-    initDb(function(err){});
-  }
-
-  res.send('Hello world!');
-
-});
-
-app.get('/interface', function (req, res) {
-
+app.get('/api', function (req, res) {
   var params = url.parse(req.url);
-
   var queried = querystring.parse(params.query);
-
-  console.log(queried);
-  
   var jsonString = JSON.stringify(queried);
 
-  console.log("Stringified: " + jsonString);
-
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
     initDb(function(err){});
   }
-
-  res.send('Hello world!');
-
 });
 
 // error handling
