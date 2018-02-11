@@ -34,12 +34,11 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 }
 var db = null,
     dbDetails = new Object();
-    mongodb = null;
 
 var initDb = function(callback) {
   if (mongoURL == null) return;
 
-  mongodb = require('mongodb');
+  var mongodb = require('mongodb');
   if (mongodb == null) return;
 
   mongodb.connect(mongoURL, function(err, conn) {
@@ -65,8 +64,6 @@ app.get('/', function (req, res) {
   }
 
   res.render('index.html');
-
-  res.end('Hello world!');
 });
 
 // error handling
