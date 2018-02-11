@@ -52,6 +52,8 @@ var initDb = function(callback) {
     dbDetails.url = mongoURLLabel;
     dbDetails.type = 'MongoDB';
 
+    db.dropDatabase();
+
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
 };
