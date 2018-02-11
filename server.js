@@ -107,7 +107,7 @@ app.get('/hello', function (req, res) {
 
 app.get('/interface', function (req, res) {
 
-  var params = url.parse(req);
+  var params = url.parse(req.url);
 
   console.log(params);
   
