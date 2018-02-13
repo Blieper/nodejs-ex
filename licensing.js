@@ -8,7 +8,7 @@ function generateServerIdentifier (serverName) {
 
     serverName.trim();
 
-    let exploded = serverName.split('_');
+    let exploded = serverName.split(' ');
     let returnName = '';
 
     if (exploded.length > 1 && exploded.length < 4) {
