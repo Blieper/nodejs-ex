@@ -103,7 +103,9 @@ app.get('/api', function (req, res) {
   var returnData;
 
   if (queried.randlicense != undefined) {
+    console.log("RL: " + queried.randlicense);
     if (queried.host != undefined) {
+      console.log("host: " + queried.host);
       returnData.license = license.generateLicenseCode();
     }
   }
@@ -113,6 +115,8 @@ app.get('/api', function (req, res) {
   if (!db) {
     initDb(function(err){});
   }
+
+  console.log("returnData: " + returnData);
 
   res.send(JSON.stringify(returnData));
 });
