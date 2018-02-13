@@ -2,7 +2,8 @@
 var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
-    url     = require('url');
+    url     = require('url'),
+    license = require('./licensing');
 
 const querystring = require('querystring');
     
