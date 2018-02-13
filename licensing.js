@@ -16,7 +16,7 @@ function generateServerIdentifier (serverName) {
             returnName += exploded[i][1];
         }
     }else{
-        returnName = serverName.substring(0,2);
+        returnName = serverName.substring(0,3);
     }
 
     return returnName;
@@ -37,7 +37,7 @@ exports.generateLicenseCode = function (serverName) {
     let testName        = serverName;
     let digits          = '';
 
-    while (testName.test(/\d/g)) {
+    while (testName.search(/\d/g)) {
         remainingDigits++;
         digits += testName[testName.search(/\d/g)];
         testName = testName.subString(testName.search(/\d/g) + 1);
@@ -50,9 +50,9 @@ exports.generateLicenseCode = function (serverName) {
         if (remainingDigits == 2) {
             returnName += Digits
         } else if (remainingDigits == 1) {
-            returnName = serverIdentifier.substring(0,1) + Digits
+            returnName = serverIdentifier.substring(0,2) + Digits
         } else {
-            returnName = serverIdentifier.substring(0,2)
+            returnName = serverIdentifier.substring(0,3)
         }
     }
 
