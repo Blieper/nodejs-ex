@@ -104,7 +104,7 @@ app.get('/api', function (req, res) {
 
   if (queried.randlicense != undefined) {
     if (queried.host != undefined) {
-      returnData.license = license.generateLicenseCode(queried.host);
+      returnData.license = license.generateLicenseCode();
     }
   }
 
@@ -114,7 +114,7 @@ app.get('/api', function (req, res) {
     initDb(function(err){});
   }
 
-  res.send(jsonString);
+  res.send(JSON.stringify(returnData));
 });
 
 // error handling
