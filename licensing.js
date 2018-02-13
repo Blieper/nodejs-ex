@@ -46,26 +46,24 @@ exports.generateLicenseCode = function (serverName) {
 
     if (remainingDigits <= 2) {   
         if (remainingDigits == 2) {
-            ReturnName += Digits
+            returnName += Digits
         } else if (remainingDigits == 1) {
-            ReturnName = ServerIdentifier.substring(0,1) + Digits
+            returnName = serverIdentifier.substring(0,1) + Digits
         } else {
-            ReturnName = ServerIdentifier.substring(0,2)
+            returnName = serverIdentifier.substring(0,2)
         }
     }
 
-    ReturnName += '-';
+    returnName += '-';
       
-    Year = (new Date).getFullYear().toString();
+    year = (new Date).getFullYear().toString();
         
-    ReturnName += Year.substring(Year.length() - 2);    
-    ReturnName += '-';
+    returnName += year.substring(year.length() - 2);    
+    returnName += '-';
 
     // Generate random string
-        
-    RandomNum       = Math.floor(Math.random()*65535);
-   
-    ReturnName += toHex(RandomNum);
+  
+    returnName += toHex(Math.floor(Math.random()*65535));
 
     return ReturnName.toUpperCase();
 }
