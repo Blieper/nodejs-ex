@@ -106,7 +106,7 @@ app.get('/api', function (req, res) {
     console.log("RL: " + queried.randlicense);
     if (queried.host != undefined) {
       console.log("host: " + queried.host);
-      returnData.license = license.generateLicenseCode();
+      returnData.license = license.generateLicenseCode(queried.host);
     }
   }
 
