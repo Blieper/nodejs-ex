@@ -60,6 +60,25 @@ var initDb = function(callback) {
   });
 };
 
+function generateLicense () {
+  return 
+}
+
+function makeLicense () {
+  if (!db) {
+    initDb(function(err){});
+  }else{
+    var reservedLicenses = db.get
+
+    db.createDatabase("licenses", function(err, res) {
+      if (err) throw err;
+      console.log("License collection created!");
+    });
+
+    var licenseDb = db.db('licenses');
+  }
+}
+
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -100,6 +119,9 @@ app.get('/api', function (req, res) {
   var params = url.parse(req.url);
   var queried = querystring.parse(params.query);
   var jsonString = JSON.stringify(queried);
+  var returnData;
+
+  
 
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -107,7 +129,7 @@ app.get('/api', function (req, res) {
     initDb(function(err){});
   }
 
-  res.status(200);
+  res.send(returnData);
 });
 
 // error handling
