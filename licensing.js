@@ -37,7 +37,7 @@ exports.generateLicenseCode = function (serverName) {
     let testName        = serverName;
     let digits          = '';
 
-    while (testName.search(/\d/g)) {
+    while (testName.search(/\d/g) > -1) {
         remainingDigits++;
         digits += testName[testName.search(/\d/g)];
         testName = testName.substring(testName.search(/\d/g) + 1);
