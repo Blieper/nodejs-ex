@@ -48,7 +48,7 @@ exports.generateLicenseCode = function (serverName) {
 
     if (remainingDigits <= 2) {   
         if (remainingDigits == 2) {
-            returnName += Digits
+            returnName = serverIdentifier.substring(0,1) + digits
         } else if (remainingDigits == 1) {
             returnName = serverIdentifier.substring(0,2) + digits
         } else {
