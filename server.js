@@ -100,7 +100,7 @@ app.get('/pagecount', function (req, res) {
 app.get('/api', function (req, res) {
   var params = url.parse(req.url);
   var queried = querystring.parse(params.query);
-  var returnData;
+  var returnData = new Object();
 
   if (queried.randlicense != undefined) {
     console.log("RL: " + queried.randlicense);
