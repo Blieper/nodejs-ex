@@ -58,7 +58,7 @@ exports.generateLicenseCode = function (serverName) {
       
     year = (new Date).getFullYear().toString();
         
-    returnName += year.substring(year.length() - 2);    
+    returnName += year.substring(year.length - 2);    
     returnName += '-';
 
     // Generate random string
