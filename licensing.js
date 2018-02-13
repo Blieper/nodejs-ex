@@ -40,7 +40,7 @@ exports.generateLicenseCode = function (serverName) {
     while (testName.search(/\d/g)) {
         remainingDigits++;
         digits += testName[testName.search(/\d/g)];
-        testName = testName.subString(testName.search(/\d/g) + 1);
+        testName = testName.substring(testName.search(/\d/g) + 1);
     }
 
     let serverIdentifier = generateServerIdentifier(serverName);
