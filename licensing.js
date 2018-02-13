@@ -56,7 +56,7 @@ exports.generateLicenseCode = function (serverName) {
 
     returnName += '-';
       
-    year = (new Date).getFullYear().toString();
+    year = (new Date()).getFullYear().toString();
         
     returnName += year.substring(year.length - 2);    
     returnName += '-';
