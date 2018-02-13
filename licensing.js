@@ -24,7 +24,7 @@ function generateServerIdentifier (serverName) {
 
 
 function toHex(d) {
-    let str = ("0"+(Number(d).toString(16))).slice(-2).toUpperCase();
+    let str = Number(d).toString(16).toUpperCase();
 
     return "0".repeat(4 - str.length) + str;
 }
@@ -37,10 +37,10 @@ exports.generateLicenseCode = function (serverName) {
     let testName        = serverName;
     let digits          = '';
 
-    while (/\d/g.test(testName)) {
+    while (testName.test(/\d/g)) {
         remainingDigits++;
-        digits += testName[/\d/g.search(testName)];
-        testName = testName.subString(/\d/g.search(testName) + 1);
+        digits += testName[testName.search(/\d/g)];
+        testName = testName.subString(testName.search(/\d/g) + 1);
     }
 
     let serverIdentifier = generateServerIdentifier(serverName);
