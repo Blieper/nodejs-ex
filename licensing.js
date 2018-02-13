@@ -3,7 +3,7 @@ let digitRegex = /(\d([\.\,]\d+)*)$/g
 
 function generateServerIdentifier (serverName) {
     if (serverName.search(symbolRegex) > -1) {
-        serverName = serverName.subString(0,symbolRegex.search(serverName));
+        serverName = serverName.substring(0,symbolRegex.search(serverName));
     }
 
     serverName.trim();
@@ -16,7 +16,7 @@ function generateServerIdentifier (serverName) {
             returnName += exploded[i][1];
         }
     }else{
-        returnName = serverName.subString(0,2);
+        returnName = serverName.substring(0,2);
     }
 
     return returnName;
@@ -48,9 +48,9 @@ exports.generateLicenseCode = function (serverName) {
         if (RemainingDigits == 2) {
             ReturnName += Digits
         } else if (RemainingDigits == 1) {
-            ReturnName = ServerIdentifier.subString(0,1) + Digits
+            ReturnName = ServerIdentifier.substring(0,1) + Digits
         } else {
-            ReturnName = ServerIdentifier.subString(0,2)
+            ReturnName = ServerIdentifier.substring(0,2)
         }
     }
 
@@ -58,7 +58,7 @@ exports.generateLicenseCode = function (serverName) {
       
     Year = (new Date).getFullYear().toString();
         
-    ReturnName += Year.subString(Year.length() - 2);    
+    ReturnName += Year.substring(Year.length() - 2);    
     ReturnName += '-';
 
     // Generate random string
