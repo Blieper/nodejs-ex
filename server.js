@@ -12,8 +12,6 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
-license.testFunction();
-
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
@@ -63,25 +61,6 @@ var initDb = function(callback) {
   });
 };
 
-function generateLicense () {
-  return 
-}
-
-function makeLicense () {
-  if (!db) {
-    initDb(function(err){});
-  }else{
-    var reservedLicenses = db.get
-
-    db.createDatabase("licenses", function(err, res) {
-      if (err) throw err;
-      console.log("License collection created!");
-    });
-
-    var licenseDb = db.db('licenses');
-  }
-}
-
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -121,10 +100,13 @@ app.get('/pagecount', function (req, res) {
 app.get('/api', function (req, res) {
   var params = url.parse(req.url);
   var queried = querystring.parse(params.query);
-  var jsonString = JSON.stringify(queried);
   var returnData;
 
-  
+  if (queried.randlicense != undefined) {
+    if (queried.host != undefined) {
+      returnData.license = license.generateLicenseCode(queried.host);
+    }
+  }
 
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -132,7 +114,7 @@ app.get('/api', function (req, res) {
     initDb(function(err){});
   }
 
-  res.send(returnData);
+  res.send(jsonString);
 });
 
 // error handling
