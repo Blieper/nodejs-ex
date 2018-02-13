@@ -44,10 +44,10 @@ exports.generateLicenseCode = function (serverName) {
     let serverIdentifier = generateServerIdentifier(serverName);
     let returnName = serverIdentifier;
 
-    if (RemainingDigits <= 2) {   
-        if (RemainingDigits == 2) {
+    if (remainingDigits <= 2) {   
+        if (remainingDigits == 2) {
             ReturnName += Digits
-        } else if (RemainingDigits == 1) {
+        } else if (remainingDigits == 1) {
             ReturnName = ServerIdentifier.substring(0,1) + Digits
         } else {
             ReturnName = ServerIdentifier.substring(0,2)
@@ -64,9 +64,8 @@ exports.generateLicenseCode = function (serverName) {
     // Generate random string
         
     RandomNum       = Math.floor(Math.random()*65535);
-    StringifiedNum  = toHex(RandomNum);
-    
-    ReturnName += StringifiedNum
+   
+    ReturnName += toHex(RandomNum);
 
     return ReturnName.toUpperCase();
 }
