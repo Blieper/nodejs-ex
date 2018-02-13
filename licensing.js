@@ -65,5 +65,5 @@ exports.generateLicenseCode = function (serverName) {
   
     returnName += toHex(Math.floor(Math.random()*65535));
 
-    return ReturnName.toUpperCase();
+    return returnName.toUpperCase();
 }
