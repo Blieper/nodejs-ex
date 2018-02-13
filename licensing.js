@@ -24,7 +24,9 @@ function generateServerIdentifier (serverName) {
 
 
 function toHex(d) {
-    return  ("0"+(Number(d).toString(16))).slice(-2).toUpperCase()
+    let str = ("0"+(Number(d).toString(16))).slice(-2).toUpperCase();
+
+    return "0".repeat(4 - str.length) + str;
 }
 
 exports.generateLicenseCode = function (serverName) {
