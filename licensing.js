@@ -3,7 +3,7 @@ let digitRegex = /(\d([\.\,]\d+)*)$/g
 
 function generateServerIdentifier (serverName) {
     if (serverName.search(symbolRegex) > -1) {
-        serverName = serverName.substring(0,symbolRegex.search(serverName));
+        serverName = serverName.substring(0,serverName.search(symbolRegex));
     }
 
     serverName.trim();
