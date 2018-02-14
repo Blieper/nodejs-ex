@@ -11,7 +11,7 @@ exports.createUserDatabase = function (db, dbname) {
     });
 }
 
-exports.registerAndCheckUser = function (db, id, password) {
+exports.registerAndCheckUser = function (db, id, password, callback) {
     let dbo = db.db(db.databaseName);
     let userExists = false;
     let user;
@@ -44,7 +44,6 @@ exports.registerAndCheckUser = function (db, id, password) {
         }
     });
 
-
-    return user;
+    callback(user);
 }
 
