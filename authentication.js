@@ -9,26 +9,34 @@ exports.createUserDatabase = function (db, dbname) {
     });
 }
 
-exports.registerUser = function (db, id, password) {
+exports.registerAndCheckUser = function (db, id, password) {
     let dbo = db.db(db.databaseName);
+    let foundUsers;
+    let userExists = false;
 
-    if (!db.getUser(id)) {
-        db.createUser(
-            {
-                user: id,
-                pwd: password,
-                // roles: [
-                //     { role: "read", db: "reporting" },
-                //     { role: "read", db: "products" },
-                //     { role: "read", db: "sales" },
-                //     { role: "readWrite", db: "accounts" }
-                // ]
-            }
-        )
+    // find user 
+    dbo.collection("users").find({}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
 
-        console.log("User: " + id + " added!");
-    } else {
-        console.log("User: " + id + " already exists!");
+        foundUsers = result;
+    });
+
+    if (foundUsers) {
+        userExists = foundUsers.find(function(element){
+            return element.steamid == id && element.pwd == password;
+        });
+
+        if (!userExists) {  
+            dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
+                if (err) throw err;
+                console.log("User: " + id + " added!");
+            });
+        } else {
+            console.log("User: " + id + " already exists!");
+        }
     }
+
+    return userExists;
 }
 
