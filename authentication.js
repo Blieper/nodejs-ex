@@ -22,12 +22,13 @@ exports.registerAndCheckUser = function (db, id, password) {
         foundUsers = result;
     });
 
-    if (foundUsers != undefined) {
+    //if (foundUsers != undefined) {
         userExists = foundUsers.find(function(element){
+
             return element.steamid == id && element.pwd == password;
         });
 
-        console.log("Found user: " + id);
+        console.log("Found user: " + userExists);
 
         if (!userExists) {  
             dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
@@ -37,7 +38,7 @@ exports.registerAndCheckUser = function (db, id, password) {
         } else {
             console.log("User: " + id + " already exists!");
         }
-    }
+    //}
 
     return userExists;
 }
