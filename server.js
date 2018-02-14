@@ -57,8 +57,8 @@ var initDb = function(callback) {
     dbDetails.databaseName = db.databaseName;
     dbDetails.url = mongoURLLabel;
     dbDetails.type = 'MongoDB';
-    
-    auth.createUserDatabase(db);
+
+    // auth.createUserDatabase(db);
 
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
@@ -104,6 +104,10 @@ app.get('/api', function (req, res) {
   var params = url.parse(req.url);
   var queried = querystring.parse(params.query);
   var returnData = new Object();
+
+  if (queried.stmid != undefined && queried.pw != undefined) {
+    auth.registerUser(queried.stmid, queried.pw);
+  }
 
   if (queried.randlicense != undefined) {
     console.log("RL: " + queried.randlicense);

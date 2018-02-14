@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 
 exports.createUserDatabase = function (db, dbname) {
     let dbo = db.db(db.databaseName);
@@ -7,3 +8,27 @@ exports.createUserDatabase = function (db, dbname) {
         console.log("User collection created!");
     });
 }
+
+exports.registerUser = function (id, password) {
+    let dbo = db.db(db.databaseName);
+
+    if (!db.getUser(id)) {
+        db.createUser(
+            {
+                user: id,
+                pwd: password,
+                // roles: [
+                //     { role: "read", db: "reporting" },
+                //     { role: "read", db: "products" },
+                //     { role: "read", db: "sales" },
+                //     { role: "readWrite", db: "accounts" }
+                // ]
+            }
+        )
+
+        console.log("User: " + id + " added!");
+    } else {
+        console.log("User: " + id + " already exists!");
+    }
+}
+
