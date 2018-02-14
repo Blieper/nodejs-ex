@@ -32,6 +32,9 @@ function toHex(d) {
 exports.generateLicenseCode = function (serverName) {
     serverName = serverName.replace(symbolRegex,"");
     serverName = serverName.replace(digitRegex,"");
+    serverName = serverName.trim();
+
+    console.log("Processed name: " + serverName);
 
     let remainingDigits = 0;
     let testName        = serverName;
@@ -42,6 +45,8 @@ exports.generateLicenseCode = function (serverName) {
         digits += testName[testName.search(/\d/g)];
         testName = testName.substring(testName.search(/\d/g) + 1);
     }
+
+    console.log("Digits: " + digits);
 
     let serverIdentifier = generateServerIdentifier(serverName);
     let returnName = serverIdentifier;
@@ -55,6 +60,8 @@ exports.generateLicenseCode = function (serverName) {
             returnName = serverIdentifier.substring(0,3)
         }
     }
+
+    console.log("Full identifier: " + returnName);
 
     returnName += '-';
       
