@@ -1,6 +1,6 @@
 
-exports.createUserDatabase = function (db) {
-    let dbo = db.db(mongoDatabase);
+exports.createUserDatabase = function (db, dbname) {
+    let dbo = db.db(db.databaseName);
 
     dbo.createCollection("users", function(err, res) {
         if (err) throw err;
