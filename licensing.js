@@ -13,7 +13,7 @@ function generateServerIdentifier (serverName) {
 
     if (exploded.length > 1 && exploded.length < 4) {
         for (let i = 0; i < exploded.length; i++) {
-            returnName += exploded[i][1];
+            returnName += exploded[i][0];
         }
     }else{
         returnName = serverName.substring(0,3);
