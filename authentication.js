@@ -19,7 +19,7 @@ exports.registerAndCheckUser = function (db, id, password) {
     dbo.collection("users").find({}).toArray(function(err, result) {
         if (err) throw err;
 
-        foundUsers = result.slice(0);
+        foundUsers = result;
     });
 
     console.log("Found users: " + foundUsers);
@@ -43,7 +43,7 @@ exports.registerAndCheckUser = function (db, id, password) {
     }else{
         dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
             if (err) throw err;
-            console.log("User: " + id + " added!");
+            console.log("No users found! User: " + id + " added!");
         });
     }
 
