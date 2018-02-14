@@ -12,8 +12,8 @@ exports.createUserDatabase = function (db, dbname) {
 exports.registerUser = function (db, id, password) {
     let dbo = db.db(db.databaseName);
 
-    if (!dbo.getUser(id)) {
-        dbo.createUser(
+    if (!db.getUser(id)) {
+        db.createUser(
             {
                 user: id,
                 pwd: password,
