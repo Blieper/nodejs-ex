@@ -27,6 +27,8 @@ exports.registerAndCheckUser = function (db, id, password) {
             return element.steamid == id && element.pwd == password;
         });
 
+        console.log("Found user: " + id);
+
         if (!userExists) {  
             dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                 if (err) throw err;
