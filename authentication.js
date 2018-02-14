@@ -13,12 +13,13 @@ exports.createUserDatabase = function (db, dbname) {
 
 exports.registerAndCheckUser = function (db, id, password, callback) {
     let dbo = db.db(db.databaseName);
-    let userExists = false;
-    let user;
 
     // find user 
     dbo.collection("users").find({}).toArray(function(err, result) {
         if (err) throw err;
+        
+        let userExists = false;
+        let user;
 
         if (result.length > 0) {
             userExists = result.find(function(element){
@@ -42,8 +43,8 @@ exports.registerAndCheckUser = function (db, id, password, callback) {
                 console.log("No users found! User: " + id + " added!");
             });
         }
+   
+        callback(user);
     });
-
-    callback(user);
 }
 
