@@ -11,17 +11,18 @@ exports.createUserDatabase = function (db, dbname) {
 
 exports.registerAndCheckUser = function (db, id, password) {
     let dbo = db.db(db.databaseName);
-    let foundUsers;
+    let foundUsers = [];
     let userExists = false;
     let user;
 
     // find user 
     dbo.collection("users").find({}).toArray(function(err, result) {
         if (err) throw err;
-        console.log("Found users: " + result);
 
-        foundUsers = result;
+        foundUsers = result.slice(0);
     });
+
+    console.log("Found users: " + foundUsers);
 
     if (foundUsers.length > 0) {
         userExists = foundUsers.find(function(element){
