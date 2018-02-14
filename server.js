@@ -3,7 +3,8 @@ var express = require('express'),
     app     = express(),
     morgan  = require('morgan'),
     url     = require('url'),
-    license = require('./licensing');
+    license = require('./licensing')
+    auth    = require('./authentication');
 
 const querystring = require('querystring');
     
@@ -56,6 +57,8 @@ var initDb = function(callback) {
     dbDetails.databaseName = db.databaseName;
     dbDetails.url = mongoURLLabel;
     dbDetails.type = 'MongoDB';
+    
+    auth.createUserDatabase(db);
 
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
