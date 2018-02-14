@@ -11,12 +11,12 @@ function generateServerIdentifier (serverName) {
     let exploded = serverName.split(' ');
     let returnName = '';
 
-    if (exploded.length > 1 && exploded.length < 4) {
+    if (exploded.length > 1 && exploded.length < 3) {
         for (let i = 0; i < exploded.length; i++) {
             returnName += exploded[i][0];
         }
     }else{
-        returnName = serverName.substring(0,3);
+        returnName = serverName.substring(0,2);
     }
 
     return returnName;
@@ -51,13 +51,13 @@ exports.generateLicenseCode = function (serverName) {
     let serverIdentifier = generateServerIdentifier(serverName);
     let returnName = serverIdentifier;
 
-    if (remainingDigits <= 2) {   
+    if (remainingDigits <= 1) {   
         if (remainingDigits == 2) {
             returnName = serverIdentifier.substring(0,1) + digits
         } else if (remainingDigits == 1) {
-            returnName = serverIdentifier.substring(0,2) + digits
+            returnName = serverIdentifier.substring(0,1) + digits
         } else {
-            returnName = serverIdentifier.substring(0,3)
+            returnName = serverIdentifier.substring(0,2)
         }
     }
 
