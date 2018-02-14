@@ -125,7 +125,7 @@ app.get('/api', function (req, res) {
 
   // console.log("returnData: " + returnData);
 
-  // res.send(JSON.stringify(returnData));
+  res.send(JSON.stringify(returnData));
 });
 
 // error handling

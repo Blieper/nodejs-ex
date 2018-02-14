@@ -11,7 +11,7 @@ exports.createUserDatabase = function (db, dbname) {
     });
 }
 
-exports.registerAndCheckUser = function (db, id, password, res, query) {
+exports.registerAndCheckUser = function (db, id, password, nres, query) {
     let dbo = db.db(db.databaseName);
 
     // find user 
@@ -33,14 +33,14 @@ exports.registerAndCheckUser = function (db, id, password, res, query) {
                 dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                     if (err) throw err;
                     console.log("User: " + id + " added!");
-                    res.send("No users found! You have been registered!");
+                    nres.send("No users found! You have been registered!");
                 });
             } 
         }else{
             dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                 if (err) throw err;
                 console.log("No users found! User: " + id + " added!");
-                res.send("No users found! You have been registered!");
+                nres.send("No users found! You have been registered!");
             });
         }
    
@@ -50,10 +50,10 @@ exports.registerAndCheckUser = function (db, id, password, res, query) {
 
                 var returnData = new Object();
 
-                res.send(JSON.stringify(returnData));
+                nres.send(JSON.stringify(returnData));
             }else{
                 console.log("Steamid and password do not match!");
-                res.send("Steamid and password do not match!");
+                nres.send("Steamid and password do not match!");
             }
         }
     });
