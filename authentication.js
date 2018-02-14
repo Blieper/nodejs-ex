@@ -23,7 +23,7 @@ exports.registerAndCheckUser = function (db, id, password) {
         foundUsers = result;
     });
 
-    if (foundUsers != undefined) {
+    if (foundUsers.length > 0) {
         userExists = foundUsers.find(function(element){
             user = element;
             return element.steamid == id;
