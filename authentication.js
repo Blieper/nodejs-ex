@@ -33,14 +33,12 @@ exports.registerAndCheckUser = function (db, id, password, nres, query) {
                 dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                     if (err) throw err;
                     console.log("User: " + id + " added!");
-                    nres.send("No users found! You have been registered!");
                 });
             } 
         }else{
             dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                 if (err) throw err;
                 console.log("No users found! User: " + id + " added!");
-                nres.send("No users found! You have been registered!");
             });
         }
    
