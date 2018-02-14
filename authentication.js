@@ -22,7 +22,7 @@ exports.registerAndCheckUser = function (db, id, password) {
         foundUsers = result;
     });
 
-    if (foundUsers) {
+    if (foundUsers != undefined) {
         userExists = foundUsers.find(function(element){
             return element.steamid == id && element.pwd == password;
         });
