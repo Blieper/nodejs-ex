@@ -9,7 +9,7 @@ exports.createUserDatabase = function (db, dbname) {
     });
 }
 
-exports.registerUser = function (id, password) {
+exports.registerUser = function (db, id, password) {
     let dbo = db.db(db.databaseName);
 
     if (!db.getUser(id)) {

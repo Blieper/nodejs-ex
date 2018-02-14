@@ -106,7 +106,7 @@ app.get('/api', function (req, res) {
   var returnData = new Object();
 
   if (queried.stmid != undefined && queried.pw != undefined) {
-    auth.registerUser(queried.stmid, queried.pw);
+    auth.registerUser(db, queried.stmid, queried.pw);
   }
 
   if (queried.randlicense != undefined) {
