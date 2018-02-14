@@ -112,7 +112,9 @@ app.get('/api', function (req, res) {
   }
 
   if (queried.stmid != undefined && queried.pw != undefined) {
-    auth.registerUser(db, queried.stmid, queried.pw);
+    if (auth.registerAndCheckUser(db, queried.stmid, queried.pw)) {
+      //do stuff
+    }
   }
 
   if (queried.randlicense != undefined) {
