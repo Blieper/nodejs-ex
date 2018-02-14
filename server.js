@@ -112,8 +112,15 @@ app.get('/api', function (req, res) {
   }
 
   if (queried.stmid != undefined && queried.pw != undefined) {
-    if (auth.registerAndCheckUser(db, queried.stmid, queried.pw)) {
-      //do stuff
+    let user = auth.registerAndCheckUser(db, queried.stmid, queried.pw);
+
+    if (user != undefined) {
+      if (user.pwd == queried.pw) {
+        console.log("Login succesful!");
+      }else{
+        console.log("Steamid and password do not match!");
+        res.send("Steamid and password do not match!");
+      }
     }
   }
 

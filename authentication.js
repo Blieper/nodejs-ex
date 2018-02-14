@@ -13,6 +13,7 @@ exports.registerAndCheckUser = function (db, id, password) {
     let dbo = db.db(db.databaseName);
     let foundUsers;
     let userExists = false;
+    let user;
 
     // find user 
     dbo.collection("users").find({}).toArray(function(err, result) {
@@ -24,8 +25,8 @@ exports.registerAndCheckUser = function (db, id, password) {
 
     if (foundUsers != undefined) {
         userExists = foundUsers.find(function(element){
-
-            return element.steamid == id && element.pwd == password;
+            user = element;
+            return element.steamid == id;
         });
 
         console.log("Found user: " + userExists);
@@ -45,6 +46,6 @@ exports.registerAndCheckUser = function (db, id, password) {
         });
     }
 
-    return userExists;
+    return user;
 }
 
