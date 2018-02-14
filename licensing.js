@@ -1,5 +1,5 @@
 let symbolRegex = /[\\\^\$\*\+\?\.\(\)\:\;\!\|\,\.\[\]\{\}\-\_\=\+\'\"\&\%\#\@/]/g;
-let digitRegex = /(\d([\.\,]\d+)*)$/g
+let digitRegex = /(\d+([\.\,]\d+)*)$/g
 
 function generateServerIdentifier (serverName) {
     if (serverName.search(symbolRegex) > -1) {
