@@ -43,7 +43,7 @@ exports.registerAndCheckUser = function (db, id, password, res, query) {
         }
    
         if (user != undefined) {
-            if (user.pwd == queried.pw) {
+            if (user.pwd == query.pw) {
                 console.log("Login succesful!");
 
                 var returnData = new Object();
