@@ -19,9 +19,11 @@ exports.registerAndCheckUser = function (db, id, password) {
     dbo.collection("users").find({}).toArray(function(err, result) {
         if (err) throw err;
 
-        console.log("1 Found users: " + foundUsers);
+        console.log("1 Found users: " + result);
 
-        foundUsers = result;
+        for (t in result) {
+            foundUsers.push(t);
+        }
     });
 
     console.log("Found users: " + foundUsers);
