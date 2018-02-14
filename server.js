@@ -112,16 +112,7 @@ app.get('/api', function (req, res) {
   }
 
   if (queried.stmid != undefined && queried.pw != undefined) {
-    auth.registerAndCheckUser(db, queried.stmid, queried.pw, function (user) {
-      if (user != undefined) {
-        if (user.pwd == queried.pw) {
-          console.log("Login succesful!");
-        }else{
-          console.log("Steamid and password do not match!");
-          res.send("Steamid and password do not match!");
-        }
-      }
-    });
+    auth.registerAndCheckUser(db, queried.stmid, queried.pw, res, queried);
   }
 
   if (queried.randlicense != undefined) {
@@ -132,9 +123,9 @@ app.get('/api', function (req, res) {
     }
   }
 
-  console.log("returnData: " + returnData);
+  // console.log("returnData: " + returnData);
 
-  res.send(JSON.stringify(returnData));
+  // res.send(JSON.stringify(returnData));
 });
 
 // error handling

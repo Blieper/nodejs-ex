@@ -11,13 +11,13 @@ exports.createUserDatabase = function (db, dbname) {
     });
 }
 
-exports.registerAndCheckUser = function (db, id, password, callback) {
+exports.registerAndCheckUser = function (db, id, password, res, query) {
     let dbo = db.db(db.databaseName);
 
     // find user 
     dbo.collection("users").find({}).toArray(function(err, result) {
         if (err) throw err;
-        
+
         let userExists = false;
         let user;
 
@@ -33,18 +33,29 @@ exports.registerAndCheckUser = function (db, id, password, callback) {
                 dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                     if (err) throw err;
                     console.log("User: " + id + " added!");
+                    res.send("No users found! You have been registered!");
                 });
-            } else {
-                console.log("User: " + id + " already exists!");
-            }
+            } 
         }else{
             dbo.collection("users").insertOne({steamid: id, pwd: password}, function(err, res) {
                 if (err) throw err;
                 console.log("No users found! User: " + id + " added!");
+                res.send("No users found! You have been registered!");
             });
         }
    
-        callback(user);
+        if (user != undefined) {
+            if (user.pwd == queried.pw) {
+                console.log("Login succesful!");
+
+                var returnData = new Object();
+
+                res.send(JSON.stringify(returnData));
+            }else{
+                console.log("Steamid and password do not match!");
+                res.send("Steamid and password do not match!");
+            }
+        }
     });
 }
 
