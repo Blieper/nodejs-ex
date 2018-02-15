@@ -24,24 +24,24 @@ var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 808
 
 var mongoURL = 'mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database';
 
-if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
-  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
-      mongoHost     = process.env[mongoServiceName + '_SERVICE_HOST'] || '172.30.64.238',
-      mongoPort     = process.env[mongoServiceName + '_SERVICE_PORT'] || '27017',
-      mongoDatabase = process.env[mongoServiceName + '_DATABASE'] || 'sampledb',
-      mongoPassword = process.env[mongoServiceName + '_PASSWORD'] || 'uVB410wyBTMnbbul',
-      mongoUser     = process.env[mongoServiceName + '_USER'] || 'userBU7';
+// if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
+//   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
+//       mongoHost     = process.env[mongoServiceName + '_SERVICE_HOST'] || '172.30.64.238',
+//       mongoPort     = process.env[mongoServiceName + '_SERVICE_PORT'] || '27017',
+//       mongoDatabase = process.env[mongoServiceName + '_DATABASE'] || 'sampledb',
+//       mongoPassword = process.env[mongoServiceName + '_PASSWORD'] || 'uVB410wyBTMnbbul',
+//       mongoUser     = process.env[mongoServiceName + '_USER'] || 'userBU7';
 
-    if (mongoHost && mongoPort && mongoDatabase) {
-      mongoURLLabel = mongoURL = 'mongodb://';
-      if (mongoUser && mongoPassword) {
-        mongoURL += mongoUser + ':' + mongoPassword + '@';
-      }
-      // Provide UI label that excludes user id and pw
-      mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
-      mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-    }
-}
+//     if (mongoHost && mongoPort && mongoDatabase) {
+//       mongoURLLabel = mongoURL = 'mongodb://';
+//       if (mongoUser && mongoPassword) {
+//         mongoURL += mongoUser + ':' + mongoPassword + '@';
+//       }
+//       // Provide UI label that excludes user id and pw
+//       mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+//       mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+//     }
+// }
 
 // console.log('Mongo stuff:');
 // console.log(' mongoServiceName: ' + mongoServiceName);
