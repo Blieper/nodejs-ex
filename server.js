@@ -20,6 +20,9 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
+
+var baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com';
+
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
@@ -106,8 +109,8 @@ app.get('/pagecount', function (req, res) {
 
 //app.use(require('express-session')({ resave: false, saveUninitialized: false, secret: '4F0EB4E0843A507321AFAA139C6FEB9A' }));
 app.use(steam.middleware({
-	realm: mongoURL, 
-	verify: mongoURL + '/verify',
+	realm: baseURL, 
+	verify: baseURL + '/verify',
 	apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A'}
 ));
 
