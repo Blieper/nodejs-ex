@@ -11,7 +11,9 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
-    "object-assign":"4.1.0"
+    "object-assign": "^4.1.0",
+    "express-sessions": "^1.0.6",
+    "steam-login": "^0.1.6"
   },
   "engine": {
     "node": "*",
