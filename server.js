@@ -1,14 +1,13 @@
-//  OpenShift sample Node application
-var express = require('express'),
-    app     = express(),
-    morgan  = require('morgan'),
-    url     = require('url'),
-    license = require('./licensing')
-    auth    = require('./authentication'),
-	express = require('express'),
-	steam   = require('./steamlogin');
-	
-const querystring = require('querystring');
+
+var express     = require('express'),
+    app         = express(),
+    morgan      = require('morgan'),
+    url         = require('url'),
+    license     = require('./licensing')
+    express     = require('express'),
+    steam       = require('steam-login'),
+    session     = require('express-session'),
+	  querystring = require('querystring');
     
 Object.assign=require('object-assign')
 
@@ -20,16 +19,13 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-
-var baseURL = "localhost:8080"//'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com';
-
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
-      mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
-      mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
+      mongoHost     = process.env[mongoServiceName + '_SERVICE_HOST'],
+      mongoPort     = process.env[mongoServiceName + '_SERVICE_PORT'],
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
       mongoPassword = process.env[mongoServiceName + '_PASSWORD']
-      mongoUser = process.env[mongoServiceName + '_USER'];
+      mongoUser     = process.env[mongoServiceName + '_USER'];
 
   if (mongoHost && mongoPort && mongoDatabase) {
     mongoURLLabel = mongoURL = 'mongodb://';
@@ -39,9 +35,9 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-
   }
 }
+
 var db = null,
     dbDetails = new Object();
     mongodb = null;
@@ -62,8 +58,6 @@ var initDb = function(callback) {
     dbDetails.databaseName = db.databaseName;
     dbDetails.url = mongoURLLabel;
     dbDetails.type = 'MongoDB';
-
-    auth.createUserDatabase(db);
 
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
@@ -107,12 +101,21 @@ app.get('/pagecount', function (req, res) {
   }
 });
 
-//app.use(require('express-session')({ resave: false, saveUninitialized: false, secret: '4F0EB4E0843A507321AFAA139C6FEB9A' }));
+app.use(session({
+		secret: 'keyboard cat',
+    resave: false, 
+    saveUninitialized: false,
+		//cookie: { secure: true }
+  	})
+);
+
 app.use(steam.middleware({
-	realm: baseURL, 
-	verify: baseURL + '/verify',
-	apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A'}
-));
+		realm:  'http://localhost:8080', 
+		verify: 'http://localhost:8080' + '/verify',
+    apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A',
+    useSession: true
+	})
+);
 
 app.get('/authenticate', steam.authenticate(), function(req, res) {
 	res.redirect('/');
@@ -139,10 +142,6 @@ app.get('/api', function (req, res) {
   // initialized.
   if (!db) {
     initDb(function(err){});
-  }
-
-  if (queried.stmid != undefined && queried.pw != undefined) {
-    auth.registerAndCheckUser(db, queried.stmid, queried.pw, res, queried);
   }
 
   if (queried.randlicense != undefined) {
