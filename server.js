@@ -22,15 +22,24 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
       mongoPassword = process.env[mongoServiceName + '_PASSWORD']
       mongoUser     = process.env[mongoServiceName + '_USER'];
 
-  if (mongoHost && mongoPort && mongoDatabase) {
-    mongoURLLabel = mongoURL = 'mongodb://';
-    if (mongoUser && mongoPassword) {
-      mongoURL += mongoUser + ':' + mongoPassword + '@';
+    if (mongoHost && mongoPort && mongoDatabase) {
+      mongoURLLabel = mongoURL = 'mongodb://';
+      if (mongoUser && mongoPassword) {
+        mongoURL += mongoUser + ':' + mongoPassword + '@';
+      }
+      // Provide UI label that excludes user id and pw
+      mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+      mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
     }
-    // Provide UI label that excludes user id and pw
-    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
-    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-  }
+
+    console.log('Mongo stuff:');
+    console.log(' mongoServiceName: ' + mongoServiceName);
+    console.log(' mongoHost: ' + mongoHost);
+    console.log(' mongoPort: ' + mongoPort);
+    console.log(' mongoDatabase: ' + mongoDatabase);
+    console.log(' mongoPassword: ' + mongoPassword);
+    console.log(' mongoUser: ' + mongoUser);
+    console.log(' mongoURL: ' + mongoURL);
 }
 
 app.db        = null;
