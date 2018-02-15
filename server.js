@@ -6,7 +6,7 @@ var express = require('express'),
     license = require('./licensing')
     auth    = require('./authentication'),
 	express = require('express'),
-	steam   = require('steam-login');
+	steam   = require('./steamlogin');
 	
 const querystring = require('querystring');
     
@@ -21,7 +21,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURLLabel = "";
 
 
-var baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com';
+var baseURL = "localhost:8080"//'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com';
 
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
