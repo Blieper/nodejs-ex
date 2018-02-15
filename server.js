@@ -15,6 +15,8 @@ Own database (half-size, but customisable):
   PWD: DF1f3bYD6HKBxxRV
 
   mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database
+
+  mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin
 */
 
 var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -22,7 +24,7 @@ var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 808
     //mongoURL      = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || 'mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb',
     mongoURLLabel = "";
 
-var mongoURL = 'mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database';
+var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
 
 // if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 //   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
