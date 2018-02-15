@@ -9,18 +9,28 @@ Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
 
+/* 
+Own database (half-size, but customisable):
+  USN: GMCR
+  PWD: DF1f3bYD6HKBxxRV
+
+  mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database
+*/
+
 var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip            = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    mongoURL      = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    //mongoURL      = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || 'mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb',
     mongoURLLabel = "";
 
+var mongoURL = 'mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database';
+
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
-  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
-      mongoHost     = process.env[mongoServiceName + '_SERVICE_HOST'],
-      mongoPort     = process.env[mongoServiceName + '_SERVICE_PORT'],
-      mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
-      mongoPassword = process.env[mongoServiceName + '_PASSWORD']
-      mongoUser     = process.env[mongoServiceName + '_USER'];
+  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
+      mongoHost     = process.env[mongoServiceName + '_SERVICE_HOST'] || '172.30.64.238',
+      mongoPort     = process.env[mongoServiceName + '_SERVICE_PORT'] || '27017',
+      mongoDatabase = process.env[mongoServiceName + '_DATABASE'] || 'sampledb',
+      mongoPassword = process.env[mongoServiceName + '_PASSWORD'] || 'uVB410wyBTMnbbul',
+      mongoUser     = process.env[mongoServiceName + '_USER'] || 'userBU7';
 
     if (mongoHost && mongoPort && mongoDatabase) {
       mongoURLLabel = mongoURL = 'mongodb://';
@@ -31,16 +41,16 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
       mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
       mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
     }
-
-    console.log('Mongo stuff:');
-    console.log(' mongoServiceName: ' + mongoServiceName);
-    console.log(' mongoHost: ' + mongoHost);
-    console.log(' mongoPort: ' + mongoPort);
-    console.log(' mongoDatabase: ' + mongoDatabase);
-    console.log(' mongoPassword: ' + mongoPassword);
-    console.log(' mongoUser: ' + mongoUser);
-    console.log(' mongoURL: ' + mongoURL);
 }
+
+// console.log('Mongo stuff:');
+// console.log(' mongoServiceName: ' + mongoServiceName);
+// console.log(' mongoHost: ' + mongoHost);
+// console.log(' mongoPort: ' + mongoPort);
+// console.log(' mongoDatabase: ' + mongoDatabase);
+// console.log(' mongoPassword: ' + mongoPassword);
+// console.log(' mongoUser: ' + mongoUser);
+// console.log(' mongoURL: ' + mongoURL);
 
 app.db        = null;
 app.dbDetails = new Object();
