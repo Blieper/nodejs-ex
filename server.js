@@ -12,7 +12,6 @@ var express     = require('express'),
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
@@ -63,6 +62,28 @@ var initDb = function(callback) {
   });
 };
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false, 
+  saveUninitialized: true,
+  cookie: { secure: false }
+  })
+);
+
+app.use(steam.middleware({
+  realm:  'http://localhost:8080', 
+  verify: 'http://localhost:8080' + '/verify',
+  apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A',
+  useSession: true
+  })
+);
+
+// app.use(function(err, req, res, next){
+//   console.error(err.stack);
+//   res.status(500).send('Something bad happened!');
+// });
+
+// app.use(morgan('combined'))
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -83,12 +104,10 @@ app.get('/', function (req, res) {
     //res.render('index.html', { pageCountMessage : null});
   }
 
-  res.send(req.user == null ? 'not logged in' : 'hello ' + req.user.username).end();
+  res.send(req.session.steamUser == null ? 'not logged in' : 'hello ' + req.session.steamUser.username).end();
 });
 
 app.get('/pagecount', function (req, res) {
-  // try to initialize the db on every request if it's not already
-  // initialized.
   if (!db) {
     initDb(function(err){});
   }
@@ -101,28 +120,12 @@ app.get('/pagecount', function (req, res) {
   }
 });
 
-app.use(session({
-		secret: 'keyboard cat',
-    resave: false, 
-    saveUninitialized: false,
-		//cookie: { secure: true }
-  	})
-);
-
-app.use(steam.middleware({
-		realm:  'http://localhost:8080', 
-		verify: 'http://localhost:8080' + '/verify',
-    apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A',
-    useSession: true
-	})
-);
-
 app.get('/authenticate', steam.authenticate(), function(req, res) {
 	res.redirect('/');
 });
 
 app.get('/verify', steam.verify(), function(req, res) {
-	res.send(req.user).end();
+	res.send(req.session.steamUser).end();
 });
 
 app.get('/logout', steam.enforceLogin('/'), function(req, res) {
@@ -155,12 +158,6 @@ app.get('/api', function (req, res) {
   // console.log("returnData: " + returnData);
 
   res.send(JSON.stringify(returnData));
-});
-
-// error handling
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.status(500).send('Something bad happened!');
 });
 
 initDb(function(err){
