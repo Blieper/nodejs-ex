@@ -50,7 +50,7 @@ app.initDb = function(callback) {
     }
 
     app.db = conn;
-    app.dbDetails.databaseName = db.databaseName;
+    app.dbDetails.databaseName = app.db.databaseName;
     app.dbDetails.url = mongoURLLabel;
     app.dbDetails.type = 'MongoDB';
 
