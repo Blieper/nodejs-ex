@@ -34,8 +34,6 @@ exports.generateLicenseCode = function (serverName) {
     serverName = serverName.replace(digitRegex,"");
     serverName = serverName.trim();
 
-    console.log("Processed name: " + serverName);
-
     let remainingDigits = 0;
     let testName        = serverName;
     let digits          = '';
@@ -45,8 +43,6 @@ exports.generateLicenseCode = function (serverName) {
         digits += testName[testName.search(/\d/g)];
         testName = testName.substring(testName.search(/\d/g) + 1);
     }
-
-    console.log("Digits: " + digits);
 
     let serverIdentifier = generateServerIdentifier(serverName);
     let returnName = serverIdentifier;
@@ -60,9 +56,7 @@ exports.generateLicenseCode = function (serverName) {
             returnName = serverIdentifier.substring(0,2)
         }
     }
-
-    console.log("Full identifier: " + returnName);
-
+    
     returnName += '-';
       
     year = (new Date()).getFullYear().toString();
