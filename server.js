@@ -106,8 +106,8 @@ app.get('/pagecount', function (req, res) {
 
 //app.use(require('express-session')({ resave: false, saveUninitialized: false, secret: '4F0EB4E0843A507321AFAA139C6FEB9A' }));
 app.use(steam.middleware({
-	realm: 'http://localhost:3000/', 
-	verify: 'http://localhost:3000/verify',
+	realm: mongoURL, 
+	verify: mongoURL + '/verify',
 	apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A'}
 ));
 
