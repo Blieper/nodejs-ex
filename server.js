@@ -2,12 +2,8 @@
 var express     = require('express'),
     app         = express(),
     morgan      = require('morgan'),
-    url         = require('url'),
-    license     = require('./licensing')
     express     = require('express'),
-    steam       = require('steam-login'),
-    session     = require('express-session'),
-	  querystring = require('querystring');
+    session     = require('express-session');
     
 Object.assign=require('object-assign')
 
@@ -37,11 +33,11 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   }
 }
 
-var db = null,
-    dbDetails = new Object();
-    mongodb = null;
+    app.db        = null;
+    app.dbDetails = new Object();
+    app.mongodb   = null;
 
-var initDb = function(callback) {
+app.initDb = function(callback) {
   if (mongoURL == null) return;
 
   mongodb = require('mongodb');
@@ -53,28 +49,21 @@ var initDb = function(callback) {
       return;
     }
 
-    db = conn;
-    dbDetails.databaseName = db.databaseName;
-    dbDetails.url = mongoURLLabel;
-    dbDetails.type = 'MongoDB';
+    app.db = conn;
+    app.dbDetails.databaseName = db.databaseName;
+    app.dbDetails.url = mongoURLLabel;
+    app.dbDetails.type = 'MongoDB';
 
     console.log('Connected to MongoDB at: %s', mongoURL);
   });
 };
 
+// ----------------------Middleware---------------------- //
 app.use(session({
   secret: 'keyboard cat',
   resave: false, 
   saveUninitialized: true,
   cookie: { secure: false }
-  })
-);
-
-app.use(steam.middleware({
-  realm:  'http://localhost:8080', 
-  verify: 'http://localhost:8080' + '/verify',
-  apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A',
-  useSession: true
   })
 );
 
@@ -84,14 +73,20 @@ app.use(steam.middleware({
 // });
 
 // app.use(morgan('combined'))
+// ------------------------------------------------------ //
+
+var steamAuthentication  = require("./modules/steam").init(app);
+var pagecounter          = require("./modules/pagecount").init(app);
+var api                  = require("./modules/api").init(app);
+
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  if (!db) {
-    initDb(function(err){});
+  if (!app.db) {
+    app.initDb(function(err){});
   }
-  if (db) {
-    var col = db.collection('counts');
+  if (app.db) {
+    var col = app.db.collection('counts');
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
     col.count(function(err, count){
@@ -107,60 +102,10 @@ app.get('/', function (req, res) {
   res.send(req.session.steamUser == null ? 'not logged in' : 'hello ' + req.session.steamUser.username).end();
 });
 
-app.get('/pagecount', function (req, res) {
-  if (!db) {
-    initDb(function(err){});
-  }
-  if (db) {
-    db.collection('counts').count(function(err, count ){
-      res.send('{ pageCount: ' + count + '}');
-    });
-  } else {
-    res.send('{ pageCount: -1 }');
-  }
-});
-
-app.get('/authenticate', steam.authenticate(), function(req, res) {
-	res.redirect('/');
-});
-
-app.get('/verify', steam.verify(), function(req, res) {
-	res.send(req.session.steamUser).end();
-});
-
-app.get('/logout', steam.enforceLogin('/'), function(req, res) {
-	req.logout();
-	res.redirect('/');
-});
-
 app.listen(3000);
 console.log('listening');
 
-app.get('/api', function (req, res) {
-  var params = url.parse(req.url);
-  var queried = querystring.parse(params.query);
-  var returnData = new Object();
-
-  // try to initialize the db on every request if it's not already
-  // initialized.
-  if (!db) {
-    initDb(function(err){});
-  }
-
-  if (queried.randlicense != undefined) {
-    console.log("RL: " + queried.randlicense);
-    if (queried.host != undefined) {
-      console.log("host: " + queried.host);
-      returnData.license = license.generateLicenseCode(queried.host);
-    }
-  }
-
-  // console.log("returnData: " + returnData);
-
-  res.send(JSON.stringify(returnData));
-});
-
-initDb(function(err){
+app.initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
 });
 
