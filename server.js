@@ -6,7 +6,8 @@ var express = require('express'),
     license = require('./licensing')
     auth    = require('./authentication'),
 	express = require('express'),
-	steam   = require('./steamlogin');
+	steam   = require('steam-login'),
+	session = require('express-session');
 	
 const querystring = require('querystring');
     
@@ -19,9 +20,6 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
-
-
-var baseURL = "localhost:8080"//'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com';
 
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
@@ -107,12 +105,20 @@ app.get('/pagecount', function (req, res) {
   }
 });
 
-//app.use(require('express-session')({ resave: false, saveUninitialized: false, secret: '4F0EB4E0843A507321AFAA139C6FEB9A' }));
+app.use(session({
+		secret: 'keyboard cat',
+		resave: false,
+		saveUninitialized: true,
+		cookie: { secure: true }
+  	})
+);
+
 app.use(steam.middleware({
-	realm: baseURL, 
-	verify: baseURL + '/verify',
-	apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A'}
-));
+		realm: 'http://localhost:8080', 
+		verify: 'http://localhost:8080' + '/verify',
+		apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A'
+	})
+);
 
 app.get('/authenticate', steam.authenticate(), function(req, res) {
 	res.redirect('/');
