@@ -25,7 +25,7 @@ var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 808
     mongoURLLabel = "";
 
 //   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
-var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
+var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin&socketTimeoutMS=90000';
 
 // if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 //   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
@@ -67,23 +67,7 @@ app.initDb = function(callback) {
   let MongoClient = mongodb.MongoClient;
   if (mongodb == null) return;
 
-  // let mongoclient = new MongoClient(new Server('gmcrdb-shard-00-01-gxz2p.mongodb.net', 27017), {native_parser: true});
-
-  // console.log(mongoclient);
-
-  // mongoclient.open(function(err, mongoclient) {
-  //   if (err) {
-  //     callback(err);
-  //     return;
-  //   }
-
-  //   // app.db = conn;
-  //   // app.dbDetails.databaseName = app.db.databaseName;
-  //   // app.dbDetails.url = mongoURLLabel;
-  //   // app.dbDetails.type = 'MongoDB';
-
-  //   console.log('Connected to MongoDB at: %s', mongoURL);
-  // });
+  console.log('Trying to connect to database...');
 
   MongoClient.connect(mongoURL, function(err, conn) {
     if (err) {
