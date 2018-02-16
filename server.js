@@ -63,9 +63,29 @@ app.initDb = function(callback) {
   if (mongoURL == null) return;
 
   mongodb = require('mongodb');
+  let Server = mongodb.Server;
+  let MongoClient = mongodb.MongoClient;
   if (mongodb == null) return;
 
-  mongodb.connect(mongoURL, function(err, conn) {
+  // let mongoclient = new MongoClient(new Server('gmcrdb-shard-00-01-gxz2p.mongodb.net', 27017), {native_parser: true});
+
+  // console.log(mongoclient);
+
+  // mongoclient.open(function(err, mongoclient) {
+  //   if (err) {
+  //     callback(err);
+  //     return;
+  //   }
+
+  //   // app.db = conn;
+  //   // app.dbDetails.databaseName = app.db.databaseName;
+  //   // app.dbDetails.url = mongoURLLabel;
+  //   // app.dbDetails.type = 'MongoDB';
+
+  //   console.log('Connected to MongoDB at: %s', mongoURL);
+  // });
+
+  MongoClient.connect(mongoURL, function(err, conn) {
     if (err) {
       callback(err);
       return;
