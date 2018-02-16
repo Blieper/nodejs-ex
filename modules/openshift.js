@@ -3,10 +3,12 @@
 
 exports.init = function (app, process)
 {
-    var port            = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000,
+    var port            = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
         ip              = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
         mongoURL        = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
         mongoURLLabel   = "";
+
+    console.log(process.env);
 
     if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
         var mongoServiceName    = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
