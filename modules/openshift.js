@@ -8,8 +8,6 @@ exports.init = function (app, process)
         mongoURL        = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
         mongoURLLabel   = "";
 
-    console.log(process.env);
-
     if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
         var mongoServiceName    = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
             mongoHost           = process.env[mongoServiceName + '_SERVICE_HOST'],
