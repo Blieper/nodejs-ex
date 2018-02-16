@@ -9,23 +9,12 @@ Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
 
-/* 
-Own database (half-size, but customisable):
-  USN: GMCR
-  PWD: DF1f3bYD6HKBxxRV
-
-  mongodb+srv://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-gxz2p.mongodb.net/database
-
-  mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin
-*/
-
 var port          = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip            = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     //mongoURL      = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || 'mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb',
     mongoURLLabel = "";
 
-//   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
-var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin&socketTimeoutMS=90000';
+var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/test?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
 
 // if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 //   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase() || 'MONGODB',
@@ -45,15 +34,6 @@ var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb
 //       mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
 //     }
 // }
-
-// console.log('Mongo stuff:');
-// console.log(' mongoServiceName: ' + mongoServiceName);
-// console.log(' mongoHost: ' + mongoHost);
-// console.log(' mongoPort: ' + mongoPort);
-// console.log(' mongoDatabase: ' + mongoDatabase);
-// console.log(' mongoPassword: ' + mongoPassword);
-// console.log(' mongoUser: ' + mongoUser);
-// console.log(' mongoURL: ' + mongoURL);
 
 app.db        = null;
 app.dbDetails = new Object();
@@ -93,6 +73,8 @@ app.use(session({
   })
 );
 
+app.use("/style",express.static(__dirname + '/views/style/'));
+
 // app.use(function(err, req, res, next){
 //   console.error(err.stack);
 //   res.status(500).send('Something bad happened!');
@@ -106,26 +88,12 @@ var pagecounter          = require("./modules/pagecount").init(app);
 var api                  = require("./modules/api").init(app);
 
 app.get('/', function (req, res) {
-  // try to initialize the db on every request if it's not already
-  // initialized.
   if (!app.db) {
     app.initDb(function(err){});
   }
-  if (app.db) {
-    var col = app.db.collection('counts');
-    // Create a document with request IP and current time of request
-    col.insert({ip: req.ip, date: Date.now()});
-    col.count(function(err, count){
-      if (err) {
-        console.log('Error running count. Message:\n'+err);
-      }
-      //res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
-    });
-  } else {
-    //res.render('index.html', { pageCountMessage : null});
-  }
 
-  res.send(req.session.steamUser == null ? 'not logged in' : 'hello ' + req.session.steamUser.username).end();
+  res.render('index.html', { loggedInMessage : req.session.steamUser == null ? null : 'Hello ' + req.session.steamUser.username});
+  //res.send(req.session.steamUser == null ? 'not logged in' : 'hello ' + req.session.steamUser.username).end();
 });
 
 app.listen(3000);

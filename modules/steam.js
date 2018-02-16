@@ -1,13 +1,12 @@
 // steam authentication
 
 exports.init = function (app){
-    steam       = require('steam-login');
+    steam = require('steam-login');
 
     app.use(steam.middleware({
-        realm:  'http://localhost:8080', 
-        verify: 'http://localhost:8080' + '/verify',
-        apiKey: '4F0EB4E0843A507321AFAA139C6FEB9A',
-        useSession: true
+        realm:  'localhost:8080', 
+        verify: 'localhost:8080/verify',
+        apiKey: '3E1190FDDEE75FCC8A5DA2650A07E06E'
         })
       );
 
@@ -16,7 +15,7 @@ exports.init = function (app){
     });
     
     app.get('/verify', steam.verify(), function(req, res) {
-        res.send(req.session.steamUser).end();
+        res.send(res.session.steamUser);
     });
     
     app.get('/logout', steam.enforceLogin('/'), function(req, res) {

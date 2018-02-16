@@ -3,6 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>GMod Car Database</title>
+  <title>Garry's Mod Car Database</title>
+  <link rel="stylesheet" type="text/css" href="style/base.css">
 </head>
+<body>
+  <header id="title">Garry's Mod Car Database</header>
+
+  <% if (loggedInMessage) { %>
+    <p id="logininfo"><%=loggedInMessage%></p>
+        
+    <div class='steambutton'>
+        <a href="/logout" type="button">Logout</a>
+      </div>
+  <% } else { %>
+    <p id="logininfo">You are not logged in</p>
+    
+    <div class='steambutton'>
+      <a href="/authenticate" type="button">Login with Steam</a>
+    </div>
+  <%} %>
+
+  <hr style="height: 1px; color: white;">
+  <div id="summary">
+    <p>This is the Garry's Mod Car Database - an online database meant to keep track of existing cars built in Garry's Mod.</p>
+  </div>
+  <div class="bottom">
+    <p id="mb">Made by KrypteK</p>
+  </div>  
+</body>
 </html>
