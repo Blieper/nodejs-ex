@@ -28,8 +28,8 @@ let passport        = require('passport'),
     //   credentials (in this case, an OpenID identifier and profile), and invoke a
     //   callback with a user object.
     passport.use(new SteamStrategy({
-        returnURL:  'http://localhost:3000/auth/steam/return',
-        realm:      'http://localhost:3000/',
+        returnURL:  'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/auth/steam/return',
+        realm:      'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/',
         apiKey:     '10B1849DB0B2137A8F84489F2B570AA9'
         },
         function(identifier, profile, done) {
