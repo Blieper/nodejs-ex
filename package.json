@@ -12,11 +12,13 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.2.34",
     "morgan": "^1.9.0",
+    "nodemon": "^1.15.0",
     "object-assign": "^4.1.1",
     "openid": "^2.0.6",
     "opid": "^0.1.0",
     "passport": "^0.4.0",
     "passport-steam": "^1.0.8",
+    "socket.io": "^2.0.4",
     "steam-login": "^0.1.6"
   },
   "engine": {

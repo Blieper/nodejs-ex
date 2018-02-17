@@ -4,6 +4,7 @@ var express         = require('express'),
     
 app.engine('html', require('ejs').renderFile);
 
+
 // ----------------------Middleware---------------------- //
   // Session stuff
   app.use(session({
@@ -16,6 +17,8 @@ app.engine('html', require('ejs').renderFile);
 
   // Static path for css
   app.use("/style",express.static(__dirname + '/views/style/'));
+  // Static path for clientside javascript
+  app.use("/javascript",express.static(__dirname + '/views/javascript/'));
 // ------------------------------------------------------ //
 
 // Importing seperate files for orginisation

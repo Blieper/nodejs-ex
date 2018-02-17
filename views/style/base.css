@@ -50,6 +50,35 @@ p {
     width: 1000px;
 }
 
+#account {
+    color: white;
+    padding: 0px 0px 0px 15px;    
+}
+
+#account p {
+    font-size: 32px; 
+}
+
+.info {
+    padding: 0px 50px 0px 50px;    
+    display: block;
+    margin-right: auto;
+    width: 50%;
+    font-size: 28;
+}
+
+.info button {
+    float: right;
+    color: white;
+    font-size: 28;
+    padding: 0px 15px 0px 15px;
+    background: rgb(75, 75, 75);   
+    cursor:pointer;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    border:1px solid #CCC;
+    text-decoration: none;
+}
+
 .bottom {
     word-wrap: normal;
     display: block;

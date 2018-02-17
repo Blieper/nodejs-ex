@@ -3,7 +3,10 @@
 exports.init = function (app){
 let passport        = require('passport'),
     passport_steam  = require('passport-steam'),
+    token           = require('./token'),
     SteamStrategy   = passport_steam.Strategy;
+    server          = require('http').createServer(app),
+    io              = require('socket.io')(server); 
 
     // Passport session setup.
     //   To support persistent login sessions, Passport needs to be able to
@@ -58,10 +61,56 @@ let passport        = require('passport'),
         res.redirect('/');
     }
 
+    function generateUniqueToken (testToken, callback) {
+        // get database
+        let dbo = app.db.db('db');
+
+        // try to find 'testToken'
+        dbo.collection('tokens').findOne({apitoken: testToken}, { _id: 0, token: 1}, function(err, result) {
+            if (err) throw err;
+
+            if (result) {
+                // tested token exists, try to make a new one
+                console.log('Found existing token!')
+                testToken = token.generateToken();
+
+                generateUniqueToken (testToken, callback);
+            } else{
+                console.log('Made unique token!')
+
+                // tested token is unique; fire callback with the new token
+                callback(testToken);
+            }
+        });
+    }
+
     app.get('/account', ensureAuthenticated, function(req, res){
-        res.render('index.html', { loggedInMessage : req.user == null ? null : 'Hello ' + req.user.displayName});
+        // get database
+        let dbo = app.db.db('db'); 
+
+        // get the user's steamid
+        let userSteamId = req.user._json.steamid;
+
+        // try to find the user in the database
+        dbo.collection('users').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+            if (err) throw err;
+        
+            if (result) {
+                res.render('account.html', { 
+                    isLoggedIn : req.user !== null,
+                    loggedInMessage : req.user == null ? null : 'Hello ' + req.user.displayName,
+                    APIToken: result.apitoken
+                });
+            }
+        });
     });
-    
+  
+    io.on('connection', function(client) { 
+        client.on('buttonTokenChange', function(data) {
+            io.emit('buttonUpdate', clickCount);
+        });
+    });
+
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
@@ -82,6 +131,37 @@ let passport        = require('passport'),
     //   login page.  Otherwise, the primary route function function will be called,
     //   which, in this example, will redirect the user to the home page.
     app.get('/auth/steam/return',passport.authenticate('steam', { failureRedirect: '/' }), function(req, res) {
-        res.redirect('/');
+        let dbo = app.db.db('db');
+
+        // get the user's steamid
+        let userSteamId = req.user._json.steamid;
+
+        // try to find the user in the database
+        dbo.collection('users').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+            if (err) throw err;
+
+            if (result) {
+                // Don't do anything if the user is found
+                console.log('User found! ' + JSON.stringify(result));
+            } else {
+                // Make a unique document for the new user
+                console.log('New user found! Creating documents...');      
+
+                // generate a unique api token for the user
+                generateUniqueToken (token.generateToken(), function(token){                                 
+                    let doc = {
+                        steamid: userSteamId,
+                        apitoken: token
+                    }
+
+                    dbo.collection('users').insertOne(doc, function(err, res) {
+                        if (err) throw err;
+                        console.log("1 document inserted: \n" + res);
+                    });              
+                });
+            }
+        });
+
+        res.redirect('/');        
     });
 }

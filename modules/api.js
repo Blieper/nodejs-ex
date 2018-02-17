@@ -15,15 +15,29 @@ exports.init = function (app){
         if (!app.db) {
           app.initDb(function(err){});
         }
-      
-        if (queried.randlicense != undefined) {
-          console.log("RL: " + queried.randlicense);
-          if (queried.host != undefined) {
-            console.log("host: " + queried.host);
-            returnData.license = license.generateLicenseCode(queried.host);
-          }
-        }
-   
-        res.send(JSON.stringify(returnData));
+              
+        // get database
+        let dbo = app.db.db('db');
+
+        let token = queried.token;
+
+        console.log(token);
+
+        // try to find the user in the database
+        dbo.collection('users').findOne({apitoken: token}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+            if (err) throw err;
+        
+            if (result) {
+
+              // random license
+              if (queried.randlicense != undefined && queried.host != undefined) {
+                  returnData.license = license.generateLicenseCode(queried.host);
+              }
+
+              res.send(JSON.stringify(returnData));    
+            }else {       
+              res.send("Invalid token!");            
+            }
+        });
     });
 }
