@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
   res.render('index.html', { loggedInMessage : req.user == null ? null : 'Hello ' + req.user.displayName});
 });
 
-app.listen(3000);
+//app.listen(3000);
 
 module.exports = app ;
 
