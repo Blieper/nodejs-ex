@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io.connect('/');
 
 function buttonTokenChange(){
   if (confirm("Are you sure you want to change your API token?")) {

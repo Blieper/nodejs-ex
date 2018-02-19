@@ -31,5 +31,5 @@ exports.init = function (app, process)
 
     app.openshiftDbUrl = mongoURL;
 
-    app.listen(port, ip);
+    //app.listen(port, ip);
 }

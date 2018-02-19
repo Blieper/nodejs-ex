@@ -1,15 +1,54 @@
 // steam authentication
 
-exports.init = function (app){
+exports.init = function (app, process){
 let passport        = require('passport'),
     passport_steam  = require('passport-steam'),
     token           = require('./token'),
     SteamStrategy   = passport_steam.Strategy;
-    server          = require('http').createServer(app),
-    io              = require('socket.io').listen(server);
+    server          = require('http').createServer(app);
 
-    server.listen(3000, function(){
-        console.log('listening on *:8000');
+    let port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+    console.log(port);
+
+    server.listen( port, process.env.IP || "0.0.0.0", function() { // or define ip and port manually   
+        var io = require( 'socket.io' )( server );
+    
+        io.on("connection", socket => {
+            console.log("User connected! (" + socket + ")")
+    
+            socket.on("change_token", currentToken => {
+                // get database
+                let dbo = app.db.db('sampledb'); 
+    
+                // try to find the user in the database
+                dbo.collection('steamusers').findOne({apitoken: currentToken}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+                    if (err) throw err;
+    
+                    if (result) {
+                        // Make a unique document for the new user
+                        console.log('User found! Changing token...');      
+    
+                        // generate a unique api token for the user
+                        generateUniqueToken (token.generateToken(), function(newtoken){                                                        
+                            var query = { apitoken: currentToken };
+                            var newvalues = { $set: {apitoken: newtoken } };
+    
+                            dbo.collection("steamusers").updateOne(query, newvalues, function(err, res) {
+                              if (err) throw err;
+                              console.log("1 document updated");
+                              console.log(currentToken + " -> " + newtoken);
+                            });    
+                            
+                            socket.emit("get_new_token", newtoken);
+                        });                    
+                    } else {
+                        // Don't do anything if the user is not found
+                        console.log('User not found!');
+                    }
+                });
+            })
+        });
     });
 
     // Passport session setup.
@@ -32,10 +71,10 @@ let passport        = require('passport'),
     //   credentials (in this case, an OpenID identifier and profile), and invoke a
     //   callback with a user object.
     passport.use(new SteamStrategy({
-        returnURL:  'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/auth/steam/return',
-        realm:      'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/',
-        //returnURL:  'http://localhost:8080/auth/steam/return',
-        //realm:      'http://localhost:8080/',        
+        //returnURL:  'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/auth/steam/return',
+        //realm:      'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/',
+        returnURL:  'http://localhost:8080/auth/steam/return',
+        realm:      'http://localhost:8080/',        
         apiKey:     '10B1849DB0B2137A8F84489F2B570AA9'
         },
         function(identifier, profile, done) {
@@ -109,42 +148,6 @@ let passport        = require('passport'),
                 });
             }
         });
-    });
-
-    io.on("connection", socket => {
-        console.log("User connected! (" + socket + ")")
-
-        socket.on("change_token", currentToken => {
-            // get database
-            let dbo = app.db.db('sampledb'); 
-
-            // try to find the user in the database
-            dbo.collection('steamusers').findOne({apitoken: currentToken}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
-                if (err) throw err;
-
-                if (result) {
-                    // Make a unique document for the new user
-                    console.log('User found! Changing token...');      
-
-                    // generate a unique api token for the user
-                    generateUniqueToken (token.generateToken(), function(newtoken){                                                        
-                        var query = { apitoken: currentToken };
-                        var newvalues = { $set: {apitoken: newtoken } };
-
-                        dbo.collection("steamusers").updateOne(query, newvalues, function(err, res) {
-                          if (err) throw err;
-                          console.log("1 document updated");
-                          console.log(currentToken + " -> " + newtoken);
-                        });    
-                        
-                        socket.emit("get_new_token", newtoken);
-                    });                    
-                } else {
-                    // Don't do anything if the user is not found
-                    console.log('User not found!');
-                }
-            });
-        })
     });
 
     app.get('/logout', function(req, res){
