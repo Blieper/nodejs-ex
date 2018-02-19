@@ -20,7 +20,7 @@ body {
 
 .steambutton {
     padding: 0px 15px 0px 15px; 
-    float: right;
+    /* float: right; */
     display: inline;
     color: white;
 }
