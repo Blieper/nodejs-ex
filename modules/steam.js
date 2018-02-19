@@ -6,9 +6,9 @@ let passport        = require('passport'),
     token           = require('./token'),
     SteamStrategy   = passport_steam.Strategy;
     server          = require('http').createServer(app),
-    io              = require('socket.io')(server);
+    io              = require('socket.io').listen(server);
 
-    server.listen(3000, function(){
+    server.listen(8080, function(){
         console.log('listening on *:8000');
     });
 
@@ -34,8 +34,8 @@ let passport        = require('passport'),
     passport.use(new SteamStrategy({
         returnURL:  'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/auth/steam/return',
         realm:      'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/',
-        //returnURL:  'http://localhost:3000/auth/steam/return',
-        //realm:      'http://localhost:3000/',        
+        //returnURL:  'http://localhost:8080/auth/steam/return',
+        //realm:      'http://localhost:8080/',        
         apiKey:     '10B1849DB0B2137A8F84489F2B570AA9'
         },
         function(identifier, profile, done) {
