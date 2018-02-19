@@ -12,6 +12,7 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.2.34",
     "morgan": "^1.9.0",
+    "node-gyp": "^3.6.2",
     "nodemon": "^1.15.0",
     "object-assign": "^4.1.1",
     "openid": "^2.0.6",
