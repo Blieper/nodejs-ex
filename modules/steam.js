@@ -69,7 +69,7 @@ let passport        = require('passport'),
 
     function generateUniqueToken (testToken, callback) {
         // get database
-        let dbo = app.db.db('db');
+        let dbo = app.db.db('sampledb');
 
         // try to find 'testToken'
         dbo.collection('tokens').findOne({apitoken: testToken}, { _id: 0, token: 1}, function(err, result) {
@@ -92,7 +92,7 @@ let passport        = require('passport'),
 
     app.get('/account', ensureAuthenticated, function(req, res){
         // get database
-        let dbo = app.db.db('db'); 
+        let dbo = app.db.db('sampledb'); 
 
         // get the user's steamid
         let userSteamId = req.user._json.steamid;
@@ -116,7 +116,7 @@ let passport        = require('passport'),
 
         socket.on("change_token", currentToken => {
             // get database
-            let dbo = app.db.db('db'); 
+            let dbo = app.db.db('sampledb'); 
 
             // try to find the user in the database
             dbo.collection('steamusers').findOne({apitoken: currentToken}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
@@ -167,7 +167,7 @@ let passport        = require('passport'),
     //   login page.  Otherwise, the primary route function function will be called,
     //   which, in this example, will redirect the user to the home page.
     app.get('/auth/steam/return',passport.authenticate('steam', { failureRedirect: '/' }), function(req, res) {
-        let dbo = app.db.db('db');
+        let dbo = app.db.db('sampledb');
 
         // get the user's steamid
         let userSteamId = req.user._json.steamid;

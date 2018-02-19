@@ -1,7 +1,7 @@
 // mongodb stuff
 
 exports.init = function (app){
-    var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/db?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
+    var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/sampledb?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
 
     mongoURL = app.openshiftDbUrl;
 
@@ -28,7 +28,7 @@ exports.init = function (app){
 
             app.db = conn;
 
-            let dbo = app.db.db('db');
+            let dbo = app.db.db('sampledb');
 
             //dbo.collection("users").drop();
 
