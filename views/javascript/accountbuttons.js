@@ -1,10 +1,13 @@
-var socket = io.connect();
-			 
+const socket = io();
+
 function buttonTokenChange(){
-  socket.emit('buttonTokenChange');
+  if (confirm("Are you sure you want to change your API token?")) {
+    socket.emit("change_token", APIToken);
+  }
 }
 
-//when we receive buttonUpdate, do this
-socket.on('buttonUpdate', function(data){
-    document.getElementById("buttonCount").innerHTML = 'The button has been clicked ' + data + ' times.';
+socket.on("get_new_token", token => {
+  console.log('New token! ' + token);
+  $('#apitoken').text('API Token:    ' + token);
+  APIToken = token;
 });

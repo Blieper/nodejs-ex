@@ -67,6 +67,10 @@ p {
     font-size: 28;
 }
 
+.info p {
+    display: inline;
+}
+
 .info button {
     float: right;
     color: white;

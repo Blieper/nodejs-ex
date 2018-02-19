@@ -6,9 +6,9 @@ exports.init = function (app){
     let url         = require('url');
 
     app.get('/api', function (req, res) {
-        var params = url.parse(req.url);
-        var queried = querystring.parse(params.query);
-        var returnData = new Object();
+        var params      = url.parse(req.url);
+        var queried     = querystring.parse(params.query);
+        var returnData  = new Object();
       
         // try to initialize the db on every request if it's not already
         // initialized.

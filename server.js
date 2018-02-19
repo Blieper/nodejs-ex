@@ -4,6 +4,7 @@ var express         = require('express'),
     
 app.engine('html', require('ejs').renderFile);
 
+app.url = 'http://localhost:8080'
 
 // ----------------------Middleware---------------------- //
   // Session stuff
@@ -37,7 +38,7 @@ app.get('/', function (req, res) {
   res.render('index.html', { loggedInMessage : req.user == null ? null : 'Hello ' + req.user.displayName});
 });
 
-app.listen(3000);
+//app.listen(3000);
 
 module.exports = app ;
 
