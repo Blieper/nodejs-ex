@@ -24,7 +24,7 @@ exports.init = function (app){
         console.log(token);
 
         // try to find the user in the database
-        dbo.collection('users').findOne({apitoken: token}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+        dbo.collection('steamusers').findOne({apitoken: token}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
             if (err) throw err;
         
             if (result) {
