@@ -1,0 +1,82 @@
+#container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+header, footer {
+    height: 100px;
+    width: 100%;
+}
+
+#content {
+    height: 100%;
+    width: 100%;
+}​
+
+.mdl-components .aside {
+    padding: 20px 0px;
+    background-color: hsl(0, 0%, 90%);
+    overflow: scroll;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    height: 100%;
+    top: 0;
+  }
+  
+  .option:first-child {
+      margin-top : 0px;
+  }
+  
+  .option {
+    width: 200px;
+    display: inline-flex;
+    flex-direction: row;
+    -webkit-align-items: center;
+  }
+  
+  .mdl-components {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+  }
+  
+  .mdl-components__nav {
+    /*flex : 1;*/
+    max-width: 200px;
+    padding: 15px;
+  }
+  
+  .mdl-components__pages {
+    flex: 3;
+    padding: 50px;
+  }
+
+  .sidebutton {
+      text-align: right;
+      width: 100%;
+  }
+  
+  @media all and (max-width: 840px) {
+    .mdl-components {
+      display: block;
+    }
+    .mdl-components__nav {
+      width: auto;
+      margin-bottom: 0;
+      margin-right: 0px;
+      max-width: none;
+    }
+    .mdl-components__pages {}
+    option-caption {
+      padding-left: 30px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, .66);
+      font-family: 'Roboto';
+    }
+    
+    .option {
+      margin-top : 0px;
+      width: 100px;
+      flex-direction: column;
+    }
+  }

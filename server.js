@@ -35,7 +35,7 @@ app.get('/', function (req, res) {
     app.initDb(function(err){});
   }
 
-  res.render('index.html', { loggedInMessage : req.user == null ? null : 'Hello ' + req.user.displayName});
+  res.render('main.html', { isLoggedIn : req.user != null});
 });
 
 //app.listen(3000);

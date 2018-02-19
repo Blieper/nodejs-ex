@@ -17,7 +17,7 @@ exports.init = function (app){
         }
               
         // get database
-        let dbo = app.db.db('db');
+        let dbo = app.db.db('sampledb');
 
         let token = queried.token;
 
