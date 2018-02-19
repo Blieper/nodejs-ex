@@ -32,7 +32,7 @@ exports.init = function (app){
 
             //dbo.collection("users").drop();
 
-            dbo.createCollection("users", function(err, res) {
+            dbo.createCollection("steamusers", function(err, res) {
                 if (err) throw err;
                 console.log("Users collection created!");
             });

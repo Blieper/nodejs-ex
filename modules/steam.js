@@ -98,7 +98,7 @@ let passport        = require('passport'),
         let userSteamId = req.user._json.steamid;
 
         // try to find the user in the database
-        dbo.collection('users').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+        dbo.collection('steamusers').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
             if (err) throw err;
         
             if (result) {
@@ -119,7 +119,7 @@ let passport        = require('passport'),
             let dbo = app.db.db('db'); 
 
             // try to find the user in the database
-            dbo.collection('users').findOne({apitoken: currentToken}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+            dbo.collection('steamusers').findOne({apitoken: currentToken}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
                 if (err) throw err;
 
                 if (result) {
@@ -131,7 +131,7 @@ let passport        = require('passport'),
                         var query = { apitoken: currentToken };
                         var newvalues = { $set: {apitoken: newtoken } };
 
-                        dbo.collection("users").updateOne(query, newvalues, function(err, res) {
+                        dbo.collection("steamusers").updateOne(query, newvalues, function(err, res) {
                           if (err) throw err;
                           console.log("1 document updated");
                           console.log(currentToken + " -> " + newtoken);
@@ -173,7 +173,7 @@ let passport        = require('passport'),
         let userSteamId = req.user._json.steamid;
 
         // try to find the user in the database
-        dbo.collection('users').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
+        dbo.collection('steamusers').findOne({steamid: userSteamId}, { _id: 0, steamid: 1, apitoken: 1}, function(err, result) {
             if (err) throw err;
 
             if (result) {
@@ -190,7 +190,7 @@ let passport        = require('passport'),
                         apitoken: newtoken
                     }
 
-                    dbo.collection('users').insertOne(doc, function(err, res) {
+                    dbo.collection('steamusers').insertOne(doc, function(err, res) {
                         if (err) throw err;
                         console.log("1 document inserted: \n" + res);
                     });              
