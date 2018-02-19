@@ -8,7 +8,7 @@ let passport        = require('passport'),
     server          = require('http').createServer(app),
     io              = require('socket.io')(server);
 
-    server.listen(3000, function(){
+    server.listen(8000, function(){
         console.log('listening on *:3000');
     });
 
