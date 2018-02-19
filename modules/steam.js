@@ -9,7 +9,7 @@ let passport        = require('passport'),
     io              = require('socket.io')(server);
 
     server.listen(8000, function(){
-        console.log('listening on *:3000');
+        console.log('listening on *:8000');
     });
 
     // Passport session setup.
