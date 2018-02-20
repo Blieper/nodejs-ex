@@ -73,7 +73,7 @@ let passport        = require('passport'),
 
     let baseURL = '';
 
-    if (app.openshiftDbUrl !== null) {
+    if (app.isOnOpenshift) {
         baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/';
     }else{
         baseURL = 'http://localhost:8080/';
@@ -83,8 +83,8 @@ let passport        = require('passport'),
 
     passport.use(new SteamStrategy({
 
-        returnURL:  baseURL + '/auth/steam/return',
-        realm:      baseURL + '/',        
+        returnURL:  baseURL + 'auth/steam/return',
+        realm:      baseURL,        
         apiKey:     '10B1849DB0B2137A8F84489F2B570AA9'
         },
         function(identifier, profile, done) {

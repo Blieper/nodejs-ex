@@ -31,5 +31,11 @@ exports.init = function (app, process)
 
     app.openshiftDbUrl = mongoURL;
 
+    app.isOnOpenshift = false;
+
+    if (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || true) {
+        app.isOnOpenshift = true;
+    }
+
     //app.listen(port, ip);
 }

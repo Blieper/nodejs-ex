@@ -3,10 +3,8 @@
 exports.init = function (app){
     let mongoURL = '';
 
-    console.log(app.openshiftDbUrl );
-
-    if (app.openshiftDbUrl !== null) {
-        mongoURL = app.openshiftDbUrl;
+    if (app.isOnOpenshift) {
+        mongoURL = 'mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb';
     }else {
         mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/sampledb?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
     }
