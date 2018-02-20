@@ -31,7 +31,7 @@ exports.init = function(app) {
         optional: optional,
       });
     }
-    
+
     apiFunctions.push(
       wikiObject
     );
@@ -109,10 +109,11 @@ exports.init = function(app) {
   // random license
   apiFunction('randlicense',[
     {name: 'host', type: 'nonnum'},
-    {name: 'test', type: 'string', optional: true},
-    
   ],
-  'Returns a random license based on the region of \'host\' and the current year.'
+  'Returns a random license based on the region of \'host\' and the current year. Licenses look similar to \'AB-XX-1234\'.<br>' + 
+  'AB represents an abbreviaton based on the variable \'host\'.<br>' + 
+  'XX represents the current year. (e.g 2018 becomes 18)<br>' +  
+  '1234 represents the unique identifier of the license in hexadecimals.' 
   ,function (queried,res) {
     let returnData = {};
     returnData.license = license.generateLicenseCode(queried.host);

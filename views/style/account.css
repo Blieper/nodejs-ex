@@ -1,0 +1,12 @@
+.info {
+    width: 50%;
+}
+
+.cbtns {
+    float: right;
+    display: inline-block;
+}
+
+.infotext {
+    /* display: inline-block; */
+}
