@@ -33,7 +33,7 @@ exports.init = function (app, process)
 
     app.isOnOpenshift = false;
 
-    if (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL || true) {
+    if (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL) {
         app.isOnOpenshift = true;
     }
 

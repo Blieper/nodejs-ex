@@ -1,55 +1,65 @@
 
+console.log(API);
 
-wiki = { queries: [] };
+function ToTable(dataArray) {
+    html = '<table>';
+    var len = dataArray.length;
+    for (var i = 0; i < len; i++) {
+        html += '<tr>';
+        for (var key in dataArray[i]) {
+            html += '<td>' + dataArray[i][key] + '</td>';
+        }
+        html += '</tr>';
+    }
+    html += '</table>';
+    return html;
+}
 
-wiki.queries.push({
-    head: 'randlicense',
-    requires:
-        ['host'],
-    information:
-        'Returns a random license based on the region of \'host\' and the current year.',
-    examples:
-        [
-            'randlicense&host=spitsburg _r SP-18-3D7',
-            'randlicense&host=Cre8ive%202.0 _r C8-18-634',     
-            'randlicense&host=Vehicle%20Heaven _r VH-18-29A',                       
-        ]
-});
+for (i in API) {
 
-for (query in wiki.queries) {
-    let q = wiki.queries[query];
-    
+    // Get function from the API
+    let func = API[i];
+
+    // Create div, headers and description
     let d = document.createElement('div');
+    $(d).attr('id', '_' + func.name);
+    $(d).append('<h3>' + func.name + '</h3>');
+    $(d).append('<p>' + func.description + '</p>');
+    $(d).append('<h5>Parameters</h5>');
 
-    $(d).attr('id', '_' + q.head);
-    $(d).attr('id', '_' + q.head);
-    $(d).append('<h3>' + q.head + '</h3>');
-    $(d).append('<h5>Required parameters:</h5>');
-    var list = '<ul><li>' + q.requires.join('</a></li><li>') + '</li></ul>';
-    $(d).append(list);
-    let split = q.information.split('\n');
-    for (i in split) {
-        $(d).append('</p>' + split[i] + '</p>');
-    }
+    // Create table
+    let tab = document.createElement('table');
+    $(tab).append('<thead>< tr ><th>Name</th> <th>Type</th> <th>Optional</th> </tr ></thead >');
+    $(tab).attr('id', 'pars_' + func.name);
+    $(tab).addClass('mdl-data-table');
 
-    for (i in q.examples) {
-        let str = q.examples[i];
-        let strsplit = str.split('_r');
-        let string = "Query: " + strsplit[0]; 
+    var tbody = document.createElement('tbody'),
+        props = ["name", "type", "optional"];
 
-        if (strsplit[1]) {
-            string += '&#13&#13Result: ' + strsplit[1];
-        }
+    $(tab).append(tbody);
+    $(d).append(tab);
+    
+    // Assign elements in table
+    $.each(func.parameters, function (i, par) {
+        var tr = document.createElement('tr');
+        $(tr).addClass('mdl-data-table__cell--non-numeric');
+        $.each(props, function (i, prop) {
+            let val = par[prop];
 
-        if (i != split.length - 1) {
-            string += '&#13';
-        }
+            if (val === true || val === false) {
+                val = val ? 'yes' : 'no';
+            }
 
-        $(d).append('<pre class="prettyprint lang-html">' + string + '</pre>');
-    }
+            var td = document.createElement('td');
+            $(td).html(val).appendTo(tr);
+        });
 
+        tbody.append(tr);
+    });
+
+    // Seperator
     $(d).append("<hr>");
     $('#apipagecontent').append(d);
 
-    $('#sidenav').append('<a class="mdl-navigation__link" href="#_' + q.head + '">' + q.head + '</a>');
+    $('#sidenav').append('<a class="mdl-navigation__link" href="#_' + func.name + '">' + func.name + '</a>');
 }
