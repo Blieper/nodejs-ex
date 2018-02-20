@@ -38,6 +38,11 @@ app.get('/', function (req, res) {
   res.render('main.html', { isLoggedIn : req.user != null});
 });
 
+// About page
+app.get('/about', function (req, res) {
+
+  res.render('about.html', { isLoggedIn : req.user != null});
+});
 //app.listen(3000);
 
 module.exports = app ;
