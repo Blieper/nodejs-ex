@@ -71,10 +71,12 @@ let passport        = require('passport'),
     //   credentials (in this case, an OpenID identifier and profile), and invoke a
     //   callback with a user object.
 
-    let baseURL = 'http://localhost:8080/';
+    let baseURL = '';
 
     if (app.openshiftDbUrl != null) {
         baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/';
+    }else{
+        baseURL = 'http://localhost:8080/';
     }
 
     console.log('return url: ' + baseURL);
