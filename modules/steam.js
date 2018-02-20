@@ -73,7 +73,7 @@ let passport        = require('passport'),
 
     let baseURL = 'http://localhost:8080/';
 
-    if (process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT) {
+    if (app.openshiftDbUrl != null) {
         baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/';
     }
 
