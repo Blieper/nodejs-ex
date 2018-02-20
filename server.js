@@ -23,8 +23,8 @@ app.url = 'http://localhost:8080'
 // ------------------------------------------------------ //
 
 // Importing seperate files for orginisation
-var steamAuthentication   = require("./modules/steam").init(app, process);
 var openshift             = require("./modules/openshift").init(app, process);
+var steamAuthentication   = require("./modules/steam").init(app, process);
 var mongo                 = require("./modules/mongo").init(app);
 var pagecounter           = require("./modules/pagecount").init(app);
 var api                   = require("./modules/api").init(app);
