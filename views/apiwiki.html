@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/style/aside.css" />
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=Desert"></script>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -34,9 +35,9 @@
             </div>
             <!-- Tabs -->
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-                    <a href="./" class="mdl-layout__tab">Front page</a>
-                    <a href="/apiwiki" class="mdl-layout__tab is-active">API</a>
-                    <a href="/about" class="mdl-layout__tab">About</a>
+                <a href="./" class="mdl-layout__tab">Front page</a>
+                <a href="/apiwiki" class="mdl-layout__tab is-active">API</a>
+                <a href="/about" class="mdl-layout__tab">About</a>
             </div>
         </header>
         <main class="mdl-layout__content">
@@ -46,7 +47,6 @@
                         <div class="mdl-layout__drawer">
                             <nav class="mdl-navigation" id="sidenav">
                                 <a class="mdl-navigation__link" href="#_introduction">Introduction</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
                             </nav>
                         </div>
                         <main class="mdl-layout__content">
@@ -105,6 +105,9 @@
             </div>
         </footer>
     </div>
+
+    <script src="/javascript/apiwiki.js"></script>
+
 </body>
 
 </html>

@@ -1,9 +1,11 @@
 // mongodb stuff
 
 exports.init = function (app){
-    var mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/sampledb?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
+    mongoURL = 'mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/sampledb?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin';
 
-    //mongoURL = app.openshiftDbUrl;
+    if (app.openshiftDbUrl) {
+        mongoURL = app.openshiftDbUrl;
+    }
 
     console.log('Mongo: ' + mongoURL);
 

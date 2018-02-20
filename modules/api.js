@@ -5,33 +5,9 @@ exports.init = function(app) {
   let license = require("./licensing");
   let url = require("url");
 
-  let wiki = { queries: [] };
-
-  wiki.queries.push({
-      head: 'randlicense',
-      depends:
-      'host',
-      information:
-      'Returns a random license based on the region of \'host\' and the current year.',
-      example:
-      'randlicense&host=spitsburg'
-  });
-
   // API page
   app.get("/apiwiki", function(req, res) {
-    var fs = require('fs');
-    var apiPage = fs.readFileSync("./views/apiwiki.html", "utf8");
-
-    var jsdom = require('jsdom');
-    const { JSDOM } = jsdom;
-    const { window } = new JSDOM(apiPage);
-    var $ = require('jquery')(window);
-
-    var apipagecontent = $('#apipagecontent');
-
-    apipagecontent.append( "<p>Test</p>" );
-
-    res.send($('html')[0].outerHTML, { isLoggedIn: req.user != null })
+    res.render('apiwiki.html', {isLoggedIn : req.user != null});
   });
 
   app.get("/api", function(req, res) {

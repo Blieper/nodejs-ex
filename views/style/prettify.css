@@ -3,8 +3,16 @@
     background: rgb(207, 234, 255);
     font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Monaco, Consolas, monospace;
     border: 0 !important;
+    margin-right: 25px;    
+    border-radius: 4px;
+    padding-left: 40px;
+    margin-left: 20px;
   }
-  
+
+.mdl-layout__content{
+  padding-left: 20px;
+}
+
   .pln {
     color: #FFFFFF;
   }
