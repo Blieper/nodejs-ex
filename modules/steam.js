@@ -7,11 +7,9 @@ let passport        = require('passport'),
     SteamStrategy   = passport_steam.Strategy;
     server          = require('http').createServer(app);
 
-    let port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+    console.log(app.port);
 
-    console.log(port);
-
-    server.listen( port, process.env.IP || "0.0.0.0", function() { // or define ip and port manually   
+    server.listen( app.port, app.ip, function() { // or define ip and port manually   
         var io = require( 'socket.io' )( server );
     
         io.on("connection", socket => {
@@ -71,20 +69,12 @@ let passport        = require('passport'),
     //   credentials (in this case, an OpenID identifier and profile), and invoke a
     //   callback with a user object.
 
-    let baseURL = '';
-
-    if (app.isOnOpenshift) {
-        baseURL = 'http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/';
-    }else{
-        baseURL = 'http://localhost:8080/';
-    }
-
-    console.log('return url: ' + baseURL);
+    console.log('return url: ' + app.baseURL);
 
     passport.use(new SteamStrategy({
 
-        returnURL:  baseURL + 'auth/steam/return',
-        realm:      baseURL,        
+        returnURL:  app.baseURL + 'auth/steam/return',
+        realm:      app.baseURL,        
         apiKey:     '10B1849DB0B2137A8F84489F2B570AA9'
         },
         function(identifier, profile, done) {
