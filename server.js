@@ -64,6 +64,5 @@ app.get("/", function(req, res) {
 app.get("/about", function(req, res) {
   res.render("about.html", { isLoggedIn: req.user != null });
 });
-//app.listen(3000);
 
 module.exports = app;
