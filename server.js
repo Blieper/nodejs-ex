@@ -2,9 +2,9 @@ var express = require("express"),
   app = express(),
   session = require("express-session");
 
-// Trying to get the config file for localhost tests
-
+// Getting ports and return urls based on the environment
 try {
+  // try to find a config file, if it doesn't exist, it means the app is running on openshift and will use their settings
   var m = require("./config/networkcfg");
 
   app.mongoURL =
@@ -44,7 +44,7 @@ app.use("/style", express.static(__dirname + "/views/style/"));
 app.use("/javascript", express.static(__dirname + "/views/javascript/"));
 // ------------------------------------------------------ //
 
-// Importing seperate files for orginisation
+// Importing seperate files for organisation
 var openshift = require("./modules/openshift").init(app, process);
 var steamAuthentication = require("./modules/steam").init(app, process);
 var mongo = require("./modules/mongo").init(app);

@@ -50,6 +50,10 @@ for (i in API) {
                 val = val ? 'yes' : 'no';
             }
 
+            if (val === 'nonnum') {
+                val = 'non-numeric';
+            }
+
             var td = document.createElement('td');
             $(td).html(val).appendTo(tr);
         });
