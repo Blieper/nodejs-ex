@@ -8,7 +8,7 @@ try {
   var m = require("./config/networkcfg");
 
   app.mongoURL =
-    "mongodb://GMCR:DF1f3bYD6HKBxxRV@gmcrdb-shard-00-00-gxz2p.mongodb.net:27017,gmcrdb-shard-00-01-gxz2p.mongodb.net:27017,gmcrdb-shard-00-02-gxz2p.mongodb.net:27017/sampledb?ssl=true&replicaSet=GMCRDB-shard-0&authSource=admin";
+    "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb";
 
   app.port = m.port;
   app.ip = "0.0.0.0";
