@@ -15,7 +15,7 @@ try {
   app.baseURL = "http://localhost:" + app.port +"/";
 } catch (ex) {
   app.mongoURL =
-    "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb"; //"mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
+    "mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
   app.baseURL =
     "http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/";
 
