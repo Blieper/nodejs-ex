@@ -7,8 +7,7 @@ try {
   // try to find a config file, if it doesn't exist, it means the app is running on openshift and will use their settings
   var m = require("./config/networkcfg");
 
-  app.mongoURL =
-    "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb";
+  app.mongoURL = "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb";
 
   app.port = m.port;
   app.ip = "0.0.0.0";
@@ -16,7 +15,7 @@ try {
   app.baseURL = "http://localhost:" + app.port +"/";
 } catch (ex) {
   app.mongoURL =
-    "mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
+    "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb"; //"mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
   app.baseURL =
     "http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/";
 
