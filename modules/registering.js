@@ -9,4 +9,8 @@ exports.init = function (app) {
     app.get("/register", function (req, res) {
         res.render('register.html', { isLoggedIn: req.user != null});
     });
+
+    app.get("/dab", function (req,res) {
+        res.send("*dab*");
+    }); 
 };
