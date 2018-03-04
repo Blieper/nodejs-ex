@@ -58,15 +58,16 @@
                         <form action="#">
                             <h5>Vehicle Name</h5>
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" id="sample1">
+                                <input class="mdl-textfield__input" type="text" id="in_vehiclename" pattern="[A-Za-z0-9\-\s()]+">
                                 <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
+                                <span class="mdl-textfield__error">Input is not a valid name!</span>
                             </div>
                         </form>
 
                     </div>
 
                     <div class="forms region">
-                                                
+                        
                         <h5>Region</h5>
                         <p>
                             The region/server that the license plate will be based on.
@@ -80,7 +81,7 @@
                                         md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
                                         placeholder="Choose region">
                                         <md-item-template>
-                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_region">{{item.display}}</span>
                                         </md-item-template>
                                         <md-not-found>
                                             No regions matching "{{ctrl.searchText}}" were found.
@@ -137,7 +138,7 @@
                                         md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
                                         placeholder="Choose country">
                                         <md-item-template>
-                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_country">{{item.display}}</span>
                                         </md-item-template>
                                         <md-not-found>
                                             No countries matching "{{ctrl.searchText}}" were found.
@@ -187,12 +188,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.7/angular-material.min.js"></script>
 
     <script src="javascript/register.js"></script>
     <script src="javascript/angulardropdown.js"></script>
-
 
 </body>
 
