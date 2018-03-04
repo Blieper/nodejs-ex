@@ -2,12 +2,14 @@ let imageFields = $('.imagefields');
 let cOwnerFields = $('.co-owners');
 
 function addImageField() {
+
     let d = document.createElement('div');
     $(d).addClass('imagefield');
 
     let textField = document.createElement('div');
     $(textField).addClass('mdl-textfield');
     $(textField).addClass('mdl-js-textfield');
+    $(textField).css({"width" : "70%"});
 
     let input = document.createElement('input');
     $(input).addClass('mdl-textfield__input');
@@ -23,9 +25,11 @@ function addImageField() {
     $(removeBtn).addClass('mdl-button--raised');
     $(removeBtn).addClass('mdl-js-ripple-effect');
     $(removeBtn).html('remove');
-
+    $(removeBtn).css({"margin" : "10px"});
     $(removeBtn).click(function () {
-        d.remove();
+        $(d).slideToggle(200,function(){
+            d.remove();
+        });
     });
 
     $(textField).append(input);
@@ -35,6 +39,9 @@ function addImageField() {
     $(d).append(removeBtn);
 
     $(imageFields).append(d);
+
+    $(d).hide();
+    $(d).slideToggle(200);
 
     componentHandler.upgradeDom();
 }
@@ -46,6 +53,7 @@ function addCoOwner() {
     let textField = document.createElement('div');
     $(textField).addClass('mdl-textfield');
     $(textField).addClass('mdl-js-textfield');
+    $(textField).css({"width" : "70%"})
 
     let input = document.createElement('input');
     $(input).addClass('mdl-textfield__input');
@@ -66,9 +74,12 @@ function addCoOwner() {
     $(removeBtn).addClass('mdl-button--raised');
     $(removeBtn).addClass('mdl-js-ripple-effect');
     $(removeBtn).html('remove');
+    $(removeBtn).css({"margin" : "10px"});
 
     $(removeBtn).click(function () {
-        d.remove();
+        $(d).slideToggle(200,function(){
+            d.remove();
+        });
     });
 
     $(textField).append(input);
@@ -79,6 +90,9 @@ function addCoOwner() {
     $(d).append(removeBtn);
 
     $(cOwnerFields).append(d);
+
+    $(d).hide();
+    $(d).slideToggle(200);
 
     componentHandler.upgradeDom();
 }

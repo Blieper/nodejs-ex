@@ -49,12 +49,12 @@
         </header>
         <main class="mdl-layout__content">
             <section class="mdl-layout__tab-panel is-active" id="tab_register">
-                <div class="page-content">
-                    <h4>
-                        Register Vehicle
-                    </h4>
 
-                    <div class="forms">
+                <h4>Register Vehicle</h4>
+
+                <div class="page-content">
+
+                    <div class="forms vname">
                         <form action="#">
                             <h5>Vehicle Name</h5>
                             <div class="mdl-textfield mdl-js-textfield">
@@ -62,16 +62,11 @@
                                 <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
                             </div>
                         </form>
-                        <br>
 
-                        <form action="#">
-                            <h5>Description</h5>
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5"></textarea>
-                                <label class="mdl-textfield__label" for="sample5">Description...</label>
-                            </div>
-                        </form>
-                        <br>
+                    </div>
+
+                    <div class="forms region">
+                                                
                         <h5>Region</h5>
                         <p>
                             The region/server that the license plate will be based on.
@@ -95,7 +90,39 @@
                                 </form>
                             </md-content>
                         </div>
-                        <br>
+
+                    </div>
+
+                    <div class ="forms images">
+
+                        <form action="#">
+                            <h5>Images</h5>
+
+                            <p>
+                                Add online hosted images to showcase your car
+                            </p>
+
+                            <div class="imagefields">
+                            </div>
+
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </form>
+
+                    </div>
+
+                    <div class ="forms desc">
+                        <form action="#">
+                            <h5>Description</h5>
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5"></textarea>
+                                <label class="mdl-textfield__label" for="sample5">Description...</label>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class ="forms country">
 
                         <h5>Country</h5>
                         <p>
@@ -120,30 +147,10 @@
                                 </form>
                             </md-content>
                         </div>
-                        <br>
 
-                        <form action="#">
-                            <h5>Images</h5>
+                    </div>
 
-                            <p>
-                                Add online hosted images to showcase your car
-                            </p>
-
-                            <div class="imagefields">
-                                <div class='imagefield'>
-                                    <div class="mdl-textfield mdl-js-textfield">
-                                        <input class="mdl-textfield__input" type="text">
-                                        <label class="mdl-textfield__label">Image Link</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
-                                <i class="material-icons">add</i>
-                            </button>
-                        </form>
-                        <br>
-
+                    <div class ="forms owners">
                         <form action="#">
                             <h5>Co-owner(s)</h5>
 
@@ -158,25 +165,18 @@
                                 <i class="material-icons">add</i>
                             </button>
                         </form>
-                        <br>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
-                            register
-                        </button>
+                        
                     </div>
+
                 </div>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
+                    register
+                </button>
+
             </section>
         </main>
 
-        <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer__left-section">
-                <div class="mdl-logo">Garry's Mod Vehicle Database</div>
-                <ul class="mdl-mini-footer__link-list">
-                    <li>
-                        <a href="#">Made by KrypteK & Haaax</a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
     </div> -->
 
     <!-- Angular JS Material -->

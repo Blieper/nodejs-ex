@@ -1,17 +1,44 @@
-.mdl-textfield {
-    width: 40%;
-    padding-right: 20px;
+
+
+main {
+    min-width: 800px;
+    overflow: scroll;
 }
 
-.forms {
-    padding-left: 40px;
+.page-content {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr;
+    grid-gap: 2%;
+    justify-content: center;
+    justify-self: center;
+    align-self: start;
 }
+
+.mdl-textfield {
+    width: 100%;
+}
+
+/*buttons */
 
 #registerbutton {
-    margin: 25px 0 25px 0 ;
+    margin: 25px 0 25px 0;
+    background-color: rgb(33, 150, 243);
+    color: white;
+    float: right;
 }
+
+#addimagelinks, #addco-owner {
+    margin: 5px;
+}
+
+/**/
 
 .md-padding {
     padding: 0px;
     margin: 0;
+}
+
+.forms.images, .forms.owners {
+    max-height: 300px;
+    overflow: auto;
 }
