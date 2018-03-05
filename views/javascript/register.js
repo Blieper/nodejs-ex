@@ -130,6 +130,18 @@ function createDataObject () {
     return data;
 }
 
+// necessary thing to get html entities as opposed to literal symbols (will be serverside)
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function registerData () {
-    console.log(JSON.stringify(createDataObject()));
+    let data = createDataObject();
+
+    console.log(JSON.stringify(data));
+
+    let a = htmlEntities(data.description);
+
+    $(".page-content").append("<p>" + a + "</p>");
+
 }
