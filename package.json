@@ -21,7 +21,9 @@
     "opid": "^0.1.0",
     "passport": "^0.4.0",
     "passport-steam": "^1.0.8",
-    "socket.io": "1.7.4"
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "socket.io": "^1.7.4"
   },
   "engine": {
     "node": "*",

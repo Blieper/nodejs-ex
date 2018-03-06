@@ -182,12 +182,33 @@ function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+const socket = io.connect('/');
+
+function buttonTokenChange() {
+    socket.emit("change_token", apikey);
+}
+
 function registerData() {
     let data = createDataObject();
 
-    console.log(JSON.stringify(data));
-
-    let a = htmlEntities(data.description);
-
-    $(".page-content").append("<p>" + a + "</p>");
+    socket.emit("register_vehicle", data);
 }
+
+socket.on("register_error", errorData => {
+    console.log('Got errors!');
+    console.log(JSON.stringify(errorData));
+
+    if (errorData.invalidSteamids) {
+        for (id of errorData.invalidSteamids) {
+            let textfields = $('.mdl-textfield');
+
+            for (tf of textfields) {
+                let firstChild = tf.firstChild;
+
+                if (firstChild.value === id) {
+                    // found the text field with the wrong id
+                }
+            }
+        }
+    }
+});
