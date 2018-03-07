@@ -196,9 +196,6 @@ function registerData() {
 }
 
 socket.on("register_error", errorData => {
-    console.log('Got errors!');
-    console.log(JSON.stringify(errorData));
-
     if (errorData.invalidSteamids) {
         for (id of errorData.invalidSteamids) {
             let textfields = $('.mdl-textfield');
@@ -216,5 +213,12 @@ socket.on("register_error", errorData => {
                 }
             }
         }
+    }
+
+    console.log(JSON.stringify(errorData));
+
+    if (errorData.name) {
+        let nameElement = $('#div_vehiclename');
+        $(nameElement).addClass('is-invalid');
     }
 });

@@ -10,10 +10,6 @@ exports.init = function (app, process) {
 
     console.log(app.port);
 
-    function checkRegisterSteamIDs(steamids) {
-
-    }
-
     server.listen(app.port, app.ip, function () { // or define ip and port manually   
         var io = require('socket.io')(server);
 
@@ -96,6 +92,11 @@ exports.init = function (app, process) {
                             hasError = true;
                             errorObject.country = "invalid";
                         }
+
+                        if (data.name.length == 0) {
+                            hasError = true;
+                            errorObject.name = "invalid";
+                        }                        
 
                         if (hasError) {
                             socket.emit("register_error", errorObject);
@@ -207,6 +208,11 @@ exports.init = function (app, process) {
                 });
             }
         });
+    });
+
+    // Register page
+    app.get("/register", ensureAuthenticated, function (req, res) {
+        res.render('register.html', { isLoggedIn: req.user != null});
     });
 
     app.get('/logout', function (req, res) {
