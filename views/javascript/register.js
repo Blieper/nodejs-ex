@@ -25,13 +25,13 @@ $(window).on("unload", function () {
 });
 
 $(document).ready(function () {
-    if (Cookie_Images) {
+    if (Cookie_Images && Cookie_Images instanceof Array) {
         for (i of Cookie_Images) {
             addImageField(i)
         }
     }
 
-    if (Cookie_Coowners) {
+    if (Cookie_Coowners && Cookie_Coowners instanceof Array) {
         for (i of Cookie_Coowners) {
             addCoOwner(i)
         }
