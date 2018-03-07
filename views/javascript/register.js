@@ -2,9 +2,6 @@
 let Cookie_Images = Cookies.getJSON('images');
 let Cookie_Coowners = Cookies.getJSON('coowners');
 
-if (!Cookie_Images) { Cookie_Images = Cookies.set('images', []); }
-if (!Cookie_Coowners) { Cookie_Coowners = Cookies.set('coowners', []); }
-
 $(window).on("unload", function () {
     let data = [];
 
@@ -28,12 +25,16 @@ $(window).on("unload", function () {
 });
 
 $(document).ready(function () {
-    for (i of Cookie_Images) {
-        addImageField(i)
+    if (Cookie_Images) {
+        for (i of Cookie_Images) {
+            addImageField(i)
+        }
     }
 
-    for (i of Cookie_Coowners) {
-        addCoOwner(i)
+    if (Cookie_Coowners) {
+        for (i of Cookie_Coowners) {
+            addCoOwner(i)
+        }
     }
 });
 
