@@ -170,7 +170,7 @@ function createDataObject() {
     }
 
     for (i of document.getElementsByClassName("in_coowner")) {
-        if (/7656119(\d{10})/.test(i.value)) {
+        if (i.value.length > 0) {
             data.coowners.push(i.value);
         }
     }
@@ -207,7 +207,12 @@ socket.on("register_error", errorData => {
                 let firstChild = tf.firstChild;
 
                 if (firstChild.value === id) {
-                    // found the text field with the wrong id
+                    firstChild.parentElement.className += ' is-invalid';
+
+                    $(tf).find('.mdl-textfield__error').html('Given steamid does not correspond to existing account!');
+                    $(tf).find('.mdl-textfield__input').change(function() {
+                        $(this.parentElement).find('.mdl-textfield__error').html('Input is not a valid steamid!');
+                    });
                 }
             }
         }
