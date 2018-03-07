@@ -151,6 +151,36 @@ function addCoOwner(content) {
 $('#addimagelinks').click(function () { addImageField(); });
 $('#addco-owner').click(function () { addCoOwner(); });
 
+function TermsDialog() {
+    let dialogButton = document.querySelector('#registerbutton');
+    let dialog = document.querySelector('#terms');
+    if (! dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
+    dialogButton.addEventListener('click', function() {
+       dialog.showModal();
+    });
+    dialog.querySelector('button:not([disabled])')
+    .addEventListener('click', function() {
+      dialog.close();
+    });
+
+    let actionButtons = $(dialog).find("button");
+    let agreeButton = $(actionButtons[0]);
+    let disagreeButton = $(actionButtons[1]);
+
+    agreeButton.click(function(){ //send registration data with this!
+        registerData();
+    })
+
+    disagreeButton.click(function(){ //should redirect or something we'll decide later
+        dialog.close();
+    })
+
+}
+
+$(document).ready(TermsDialog);
+
 function createDataObject() {
     let data = {};
 

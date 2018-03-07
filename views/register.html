@@ -48,7 +48,7 @@
                 <a href="./" class="mdl-layout__tab">Home</a>
             </div>
         </header>
-        <main class="mdl-layout__content" id="maincont">
+        <main class="mdl-layout__content">
             <section class="mdl-layout__tab-panel is-active" id="tab_register">
 
                 <h4>Register Vehicle</h4>
@@ -103,7 +103,7 @@
                                 <h5>Images</h5>
     
                                 <p>
-                                    Add online hosted images to showcase your car
+                                    Add online hosted images to showcase your vehicle
                                 </p>
     
                                 <div class="imagefields">
@@ -159,7 +159,7 @@
                                 <h5>Co-owner(s)</h5>
     
                                 <p>
-                                    (Optional) Add people that also own the car. Uses steamid64.
+                                    (Optional) Add people that also own the vehicle. Uses steamid64.
                                 </p>
     
                                 <div class="co-owners">
@@ -176,9 +176,22 @@
 
                 </div>
 
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton" onclick="registerData()">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
                     register
                 </button>
+
+                <dialog id="terms" class="mdl-dialog">
+                    <div class="mdl-dialog__content">
+                        <p>
+                        I understand that uploading any form of explicit, or other unrelated content will result in the <span style="color: red;">termination</span> of my 
+                        on-site account, and that such actions cannot be repealed.
+                        </p>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--primary" style="background-color: white;">Agree</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--primary" style="background-color: white;">Disagree</button>
+                    </div>
+                </dialog>
 
             </section>
         </main>
