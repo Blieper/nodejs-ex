@@ -1,6 +1,7 @@
 // Get image/coowner cookies
 let Cookie_Images = Cookies.getJSON('images');
 let Cookie_Coowners = Cookies.getJSON('coowners');
+let Cookie_Dialogue = Cookies.get('dialogue');
 
 $(window).on("unload", function () {
     let data = [];
@@ -153,30 +154,39 @@ $('#addco-owner').click(function () { addCoOwner(); });
 
 function TermsDialog() {
     let dialogButton = document.querySelector('#registerbutton');
-    let dialog = document.querySelector('#terms');
-    if (! dialog.showModal) {
-      dialogPolyfill.registerDialog(dialog);
+
+    if (Cookie_Dialogue == 1) {
+        dialogButton.onclick = registerData; //send registration data with this!
+    }else{
+        let dialog = document.querySelector('#terms');
+
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+
+        dialogButton.onclick = dialog.showModal;
+
+        dialog.querySelector('button:not([disabled])')
+            .addEventListener('click', function() {
+            dialog.close();
+            });
+
+        let actionButtons   = $(dialog).find("button");
+        let agreeButton     = $(actionButtons[0]);
+        let disagreeButton  = $(actionButtons[1]);
+
+        agreeButton.click(function(){ //send registration data with this!
+            registerData();
+            dialogButton.onclick = registerData; // Remove dialogue functionality from register button
+        });
+
+        disagreeButton.click(function(){ //should redirect or something we'll decide later
+            dialog.close();
+        });
     }
-    dialogButton.addEventListener('click', function() {
-       dialog.showModal();
-    });
-    dialog.querySelector('button:not([disabled])')
-    .addEventListener('click', function() {
-      dialog.close();
-    });
 
-    let actionButtons = $(dialog).find("button");
-    let agreeButton = $(actionButtons[0]);
-    let disagreeButton = $(actionButtons[1]);
-
-    agreeButton.click(function(){ //send registration data with this!
-        registerData();
-    })
-
-    disagreeButton.click(function(){ //should redirect or something we'll decide later
-        dialog.close();
-    })
-
+    Cookies.set('dialogue', 1);
+    Cookie_Dialogue = 1;
 }
 
 $(document).ready(TermsDialog);
