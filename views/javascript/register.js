@@ -255,8 +255,6 @@ socket.on("register_error", errorData => {
         }
     }
 
-    console.log(JSON.stringify(errorData));
-
     if (errorData.name) {
         let nameElement = $('#div_vehiclename');
         $(nameElement).addClass('is-invalid');
