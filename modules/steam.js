@@ -212,7 +212,7 @@ exports.init = function (app, process) {
 
     // Register page
     app.get("/register", ensureAuthenticated, function (req, res) {
-        res.render('register.html', { isLoggedIn: req.user != null});
+        res.render('main.html', { pagefile: 'register', isLoggedIn: req.user != null});
     });
 
     app.get('/logout', function (req, res) {
