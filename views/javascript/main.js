@@ -1,6 +1,7 @@
 function Main() {
     console.log("rdy");
-    $("#page-content").load("/pages/loadquery.html")
+    componentHandler.upgradeDom();
+    $("#page-content").load("/pages/register.html")
 }
 
 $(document).ready(Main);
