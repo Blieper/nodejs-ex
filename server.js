@@ -41,6 +41,10 @@ app.use(express.static(__dirname + "/../../public"));
 app.use("/style", express.static(__dirname + "/views/style/"));
 // Static path for clientside javascript
 app.use("/javascript", express.static(__dirname + "/views/javascript/"));
+// Static path for html files
+app.use("/pages", express.static(__dirname + "/views/pages/"));
+
+
 // ------------------------------------------------------ //
 
 // Importing seperate files for organisation
