@@ -5,12 +5,8 @@ exports.init = function (app) {
     let license = require("./licensing");
     let url = require("url");
 
-    // Register page
-    app.get("/register", function (req, res) {
-        res.render('register.html', { isLoggedIn: req.user != null});
-    });
-
-    app.get("/dab", function (req,res) {
-        res.send("*dab*");
-    }); 
+    // // Register page
+    // app.get("/register", function (req, res) {
+    //     res.render('register.html', { isLoggedIn: req.user != null});
+    // });
 };

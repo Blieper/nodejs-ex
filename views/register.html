@@ -13,10 +13,15 @@
     <link rel="stylesheet" href="/style/aside.css" />
     <link rel="stylesheet" href="/style/account.css" />
     <link rel="stylesheet" href="/style/register.css" />
+
+    <script src="style/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" href="/style/dialog-polyfill/dialog-polyfill.css"/>
+    
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=Desert"></script>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.7/angular-material.min.css">
@@ -54,126 +59,143 @@
 
                 <div class="page-content">
 
-                    <div class="forms vname">
-                        <form action="#">
-                            <h5>Vehicle Name</h5>
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" id="in_vehiclename" pattern="[A-Za-z0-9\-\s()]+">
-                                <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
-                                <span class="mdl-textfield__error">Input is not a valid name!</span>
+                    <div class="forms-grid">
+
+                        <div class="forms vname">
+                            <form action="#">
+                                <h5>Vehicle Name</h5>
+                                <div class="mdl-textfield mdl-js-textfield" id="div_vehiclename">
+                                    <input class="mdl-textfield__input" type="text" id="in_vehiclename" pattern="[A-Za-z0-9\-\s()]+">
+                                    <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
+                                    <span class="mdl-textfield__error">Input is not a valid name!</span>
+                                </div>
+                            </form>
+    
+                        </div>
+    
+                        <div class="forms region">
+                            
+                            <h5>Region</h5>
+                            <p>
+                                The region/server that the license plate will be based on.
+                            </p>
+    
+                            <div ng-controller="RegionController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="regionapp">
+                                <md-content class="md-padding">
+                                    <form ng-submit="$event.preventDefault()">
+                                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                            md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
+                                            md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
+                                            placeholder="Please choose a region">
+                                            <md-item-template>
+                                                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_region">{{item.display}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No regions matching "{{ctrl.searchText}}" were found.
+                                                <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </form>
+                                </md-content>
                             </div>
-                        </form>
-
-                    </div>
-
-                    <div class="forms region">
+    
+                        </div>
+    
+                        <div class ="forms images">
+    
+                            <form action="#">
+                                <h5>Images</h5>
+    
+                                <p>
+                                    Add online hosted images to showcase your vehicle
+                                </p>
+    
+                                <div class="imagefields">
+                                </div>
+    
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </form>
+    
+                        </div>
+    
+                        <div class ="forms desc">
+                            <form action="#">
+                                <h5>Description</h5>
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <textarea class="mdl-textfield__input" type="text" rows="3" id="in_description"></textarea>
+                                    <label class="mdl-textfield__label" for="sample5">Description...</label>
+                                </div>
+                            </form>
+                        </div>
                         
-                        <h5>Region</h5>
-                        <p>
-                            The region/server that the license plate will be based on.
-                        </p>
-
-                        <div ng-controller="RegionController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="regionapp">
-                            <md-content class="md-padding">
-                                <form ng-submit="$event.preventDefault()">
-                                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                                        md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
-                                        md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
-                                        placeholder="Choose region">
-                                        <md-item-template>
-                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_region">{{item.display}}</span>
-                                        </md-item-template>
-                                        <md-not-found>
-                                            No regions matching "{{ctrl.searchText}}" were found.
-                                            <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
-                                        </md-not-found>
-                                    </md-autocomplete>
-                                </form>
-                            </md-content>
+                        <div class ="forms country">
+    
+                            <h5>Country</h5>
+                            <p>
+                                The country that the license plate will be based on.
+                            </p>
+    
+                            <div ng-controller="CountryController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="countryapp" id="countryapp">
+                                <md-content class="md-padding">
+                                    <form ng-submit="$event.preventDefault()">
+                                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                            md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
+                                            md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
+                                            placeholder="Please choose a country">
+                                            <md-item-template>
+                                                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_country">{{item.display}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No countries matching "{{ctrl.searchText}}" were found.
+                                                <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </form>
+                                </md-content>
+                            </div>
+    
+                        </div>
+    
+                        <div class ="forms owners">
+                            <form action="#">
+                                <h5>Co-owner(s)</h5>
+    
+                                <p>
+                                    (Optional) Add people that also own the vehicle. Uses steamid64.
+                                </p>
+    
+                                <div class="co-owners">
+                                </div>
+    
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addco-owner">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </form>
+                            
                         </div>
 
-                    </div>
-
-                    <div class ="forms images">
-
-                        <form action="#">
-                            <h5>Images</h5>
-
-                            <p>
-                                Add online hosted images to showcase your car
-                            </p>
-
-                            <div class="imagefields">
-                            </div>
-
-                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
-                                <i class="material-icons">add</i>
-                            </button>
-                        </form>
-
-                    </div>
-
-                    <div class ="forms desc">
-                        <form action="#">
-                            <h5>Description</h5>
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <textarea class="mdl-textfield__input" type="text" rows="3" id="in_description"></textarea>
-                                <label class="mdl-textfield__label" for="sample5">Description...</label>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <div class ="forms country">
-
-                        <h5>Country</h5>
-                        <p>
-                            The country that the license plate will be based on.
-                        </p>
-
-                        <div ng-controller="CountryController as ctrl" layout="column" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="countryapp" id="countryapp">
-                            <md-content class="md-padding">
-                                <form ng-submit="$event.preventDefault()">
-                                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                                        md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
-                                        md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0"
-                                        placeholder="Choose country">
-                                        <md-item-template>
-                                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" id="in_country">{{item.display}}</span>
-                                        </md-item-template>
-                                        <md-not-found>
-                                            No countries matching "{{ctrl.searchText}}" were found.
-                                            <!-- <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a> -->
-                                        </md-not-found>
-                                    </md-autocomplete>
-                                </form>
-                            </md-content>
-                        </div>
-
-                    </div>
-
-                    <div class ="forms owners">
-                        <form action="#">
-                            <h5>Co-owner(s)</h5>
-
-                            <p>
-                                (Optional) Add people that also own the car. Uses steamid64.
-                            </p>
-
-                            <div class="co-owners">
-                            </div>
-
-                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addco-owner">
-                                <i class="material-icons">add</i>
-                            </button>
-                        </form>
-                        
                     </div>
 
                 </div>
 
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton" onclick="registerData()">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
                     register
                 </button>
+
+                <dialog id="terms" class="mdl-dialog">
+                    <div class="mdl-dialog__content">
+                        <p>
+                        I understand that uploading any form of explicit, or other unrelated content will result in the <span style="color: red;">termination</span> of my 
+                        on-site account, and that such actions cannot be repealed.
+                        </p>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Agree</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Disagree</button>
+                    </div>
+                </dialog>
 
             </section>
         </main>
