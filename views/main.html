@@ -13,7 +13,13 @@
     <link rel="stylesheet" href="/style/cards.css" />
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=Desert"></script>
     <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <% if (typeof pagefile != 'undefined') { %>
+        <script>var pageFile = '<%- pagefile%>';</script>        
+    <% } %>
+
     <script src="/javascript/main.js"></script>
+    
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 

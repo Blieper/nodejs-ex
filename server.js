@@ -72,7 +72,7 @@ app.get("/about", function(req, res) {
 
 // About page
 app.get("/test", function(req, res) {
-  res.render("injectedpagecontents.html", { file: 'inject', isLoggedIn: req.user != null });
+  res.render("main.html", { pagefile: 'loadquery', isLoggedIn: req.user != null });
 });
 
 module.exports = app;

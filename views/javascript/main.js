@@ -1,6 +1,12 @@
 function Main() {
     console.log("rdy");
-    $("#page-content").load("/pages/loadquery.html")
+    if (pageFile != undefined) {
+        // Loads the required page
+        $("#page-content").load("/pages/" + pageFile + ".html");
+
+        // Update MDL objects
+        componentHandler.upgradeDom();
+    }
 }
 
 $(document).ready(Main);
