@@ -5,109 +5,8 @@ exports.init = function (app, process) {
         passport_steam = require('passport-steam'),
         token = require('./token'),
         SteamStrategy = passport_steam.Strategy;
-        server = require('http').createServer(app),
-        request = require('request');
 
     console.log(app.port);
-
-    server.listen(app.port, app.ip, function () { // or define ip and port manually   
-        var io = require('socket.io')(server);
-
-        io.on("connection", socket => {
-            console.log("User connected! (" + socket + ")")
-
-            socket.on("change_token", currentToken => {
-                // get database
-                let dbo = app.db.db('sampledb');
-
-                // try to find the user in the database
-                dbo.collection('steamusers').findOne({ apitoken: currentToken }, { _id: 0, steamid: 1, apitoken: 1 }, function (err, result) {
-                    if (err) throw err;
-
-                    if (result) {
-                        // Make a unique document for the new user
-                        console.log('User found! Changing token...');
-
-                        // generate a unique api token for the user
-                        generateUniqueToken(token.generateToken(), function (newtoken) {
-                            var query = { apitoken: currentToken };
-                            var newvalues = { $set: { apitoken: newtoken } };
-
-                            dbo.collection("steamusers").updateOne(query, newvalues, function (err, res) {
-                                if (err) throw err;
-                                console.log("1 document updated");
-                                console.log(currentToken + " -> " + newtoken);
-                            });
-
-                            socket.emit("get_new_token", newtoken);
-                        });
-                    } else {
-                        // Don't do anything if the user is not found
-                        console.log('User not found!');
-                    }
-                });
-            })
-
-            socket.on("register_vehicle", data => {
-                console.log(JSON.stringify(data));
-
-                let hasError = false;
-                let errorObject = {};
-
-                request({
-                    uri: 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=10B1849DB0B2137A8F84489F2B570AA9&steamids=' + data.coowners.join(),
-                    method: 'GET',
-                    json: true
-                }, function (error, response, body) {
-                    if (error) console.log(error);
-                    else {
-                        let players = body.response.players;
-                        let idsCopy = data.coowners.slice();
-
-                        for (pl of players) {
-                            let id = pl.steamid;
-
-                            for (i in idsCopy) {
-                                if (id === idsCopy[i]) {
-                                    idsCopy.splice(i, 1);
-                                }
-                            }
-                        }
-
-                        if (idsCopy.length > 0) {
-                            hasError = true;
-                            errorObject.invalidSteamids = [];
-                        }
-
-                        for (id of idsCopy) {
-                            errorObject.invalidSteamids.push(id);
-                        }
-
-                        if (data.region == "nothing" || !data.region) {
-                            hasError = true;
-                            errorObject.region = "invalid";
-                        }
-
-                        if (data.country == "nothing" || !data.country) {
-                            hasError = true;
-                            errorObject.country = "invalid";
-                        }
-
-                        if (data.name.length == 0) {
-                            hasError = true;
-                            errorObject.name = "invalid";
-                        }                        
-
-                        if (hasError) {
-                            socket.emit("register_error", errorObject);
-                        } else {
-                            // Succesful register
-                        }
-                    }
-                });
-            })
-        });
-    });
 
     // Passport session setup.
     //   To support persistent login sessions, Passport needs to be able to
@@ -164,29 +63,6 @@ exports.init = function (app, process) {
     function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) { return next(); }
         res.redirect('/');
-    }
-
-    function generateUniqueToken(testToken, callback) {
-        // get database
-        let dbo = app.db.db('sampledb');
-
-        // try to find 'testToken'
-        dbo.collection('tokens').findOne({ apitoken: testToken }, { _id: 0, token: 1 }, function (err, result) {
-            if (err) throw err;
-
-            if (result) {
-                // tested token exists, try to make a new one
-                console.log('Found existing token!')
-                testToken = token.generateToken();
-
-                generateUniqueToken(testToken, callback);
-            } else {
-                console.log('Made unique token!')
-
-                // tested token is unique; fire callback with the new token
-                callback(testToken);
-            }
-        });
     }
 
     app.get('/account', ensureAuthenticated, function (req, res) {
@@ -252,7 +128,7 @@ exports.init = function (app, process) {
                 console.log('New user found! Creating documents...');
 
                 // generate a unique api token for the user
-                generateUniqueToken(token.generateToken(), function (newtoken) {
+                token.generateUniqueToken(token.generateToken(), app, function (newtoken) {
                     let doc = {
                         steamid: userSteamId,
                         apitoken: newtoken

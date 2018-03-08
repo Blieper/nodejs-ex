@@ -12,7 +12,7 @@ try {
   app.port = m.port;
   app.ip = "0.0.0.0";
 
-  app.baseURL = "http://localhost:" + app.port +"/";
+  app.baseURL = "http://localhost:" + app.port + "/";
 } catch (ex) {
   app.mongoURL =
     "mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
@@ -43,35 +43,39 @@ app.use("/style", express.static(__dirname + "/views/style/"));
 app.use("/javascript", express.static(__dirname + "/views/javascript/"));
 // Static path for html files
 app.use("/pages", express.static(__dirname + "/views/pages/"));
+// Static path for images
+app.use("/img", express.static(__dirname + "/views/img/"));
+
 
 
 // ------------------------------------------------------ //
 
 // Importing seperate files for organisation
 var openshift = require("./modules/openshift").init(app, process);
+var registering = require("./modules/registering").init(app);
+var socket = require("./modules/socket").init(app);
 var steamAuthentication = require("./modules/steam").init(app, process);
 var mongo = require("./modules/mongo").init(app);
 var pagecounter = require("./modules/pagecount").init(app);
 var api = require("./modules/api").init(app);
-var registering = require("./modules/registering").init(app);
 
 // Main page
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   if (!app.db) {
-    app.initDb(function(err) {});
+    app.initDb(function (err) { });
   }
 
   res.render("main.html", { isLoggedIn: req.user != null });
 });
 
 // About page
-app.get("/about", function(req, res) {
+app.get("/about", function (req, res) {
   res.render("about.html", { isLoggedIn: req.user != null });
 });
 
 
 // About page
-app.get("/test", function(req, res) {
+app.get("/test", function (req, res) {
   res.render("main.html", { pagefile: 'loadquery', isLoggedIn: req.user != null });
 });
 

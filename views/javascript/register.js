@@ -256,7 +256,17 @@ socket.on("register_error", errorData => {
     }
 
     if (errorData.name) {
-        let nameElement = $('#div_vehiclename');
-        $(nameElement).addClass('is-invalid');
+        let element = $('#div_vehiclename');
+        $(element).addClass('is-invalid');
     }
+
+    if (errorData.region) {
+        let element = $('#div_region');
+        $(element).addClass('is-invalid');
+    }  
+
+    if (errorData.country) {
+        let element = $('#div_country');
+        $(element).addClass('is-invalid');
+    }      
 });
