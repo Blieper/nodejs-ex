@@ -65,4 +65,10 @@ app.get("/about", function(req, res) {
   res.render("about.html", { isLoggedIn: req.user != null });
 });
 
+
+// About page
+app.get("/test", function(req, res) {
+  res.render("injectedpagecontents.html", { file: 'inject', isLoggedIn: req.user != null });
+});
+
 module.exports = app;
