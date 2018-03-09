@@ -1,0 +1,59 @@
+<head>
+    <script src="/javascript/accountbuttons.js"></script>
+    <link rel="stylesheet" href="/style/account.css" />
+
+    <!-- stuff needed for dialog panel -->
+    <script src="style/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" href="/style/dialog-polyfill/dialog-polyfill.css" />
+</head>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="./" class="mdl-layout__tab">Home</a>
+            <a href="#tab_account" class="mdl-layout__tab is-active">Account</a>
+            <a href="#tab_api" class="mdl-layout__tab">API</a>
+        </div>
+    </header>
+
+    <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="tab_account">
+            <div class="page-content">
+                <h3>
+                    Account
+                </h3>
+            </div>
+        </section>
+
+        <section class="mdl-layout__tab-panel" id="tab_api">
+            <div class="page-content">
+                <h3>
+                    API
+                </h3>
+                <div class="info">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect cbtns" id="changebutton">
+                        Change
+                    </button>
+
+                    <h6 id='apitoken' class='infotext'></h6>
+                    <hr>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <dialog id="terms" class="mdl-dialog">
+        <div class="mdl-dialog__content">
+            <p>
+                Changing your API Key will stop any apps that use this key from working. It cannot be undone. Are you sure you want to do
+                this?
+            </p>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Yes</button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--primary">No</button>
+        </div>
+    </dialog>
+
+</div>

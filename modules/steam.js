@@ -77,10 +77,10 @@ exports.init = function (app, process) {
             if (err) throw err;
 
             if (result) {
-                res.render('account.html', {
+                res.render('main.html', {
+                    requser: JSON.stringify(req.user),
                     isLoggedIn: req.user !== null,
-                    loggedInMessage: req.user == null ? null : 'Hello ' + req.user.displayName,
-                    APIToken: result.apitoken
+                    pagefile: 'account'
                 });
             }
         });

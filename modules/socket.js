@@ -44,8 +44,25 @@ exports.init = function (app, process) {
                                 console.log(currentToken + " -> " + newtoken);
                             });
 
-                            socket.emit("get_new_token", newtoken);
+                            socket.emit("get_token", newtoken);
                         });
+                    } else {
+                        // Don't do anything if the user is not found
+                        console.log('User not found!');
+                    }
+                });
+            })
+
+            socket.on("request_token", user => {
+                // get database
+                let dbo = app.db.db('sampledb');
+
+                // try to find the user in the database
+                dbo.collection('steamusers').findOne({ steamid: user.id }, { _id: 0, steamid: 1, apitoken: 1 }, function (err, result) {
+                    if (err) throw err;
+
+                    if (result) {
+                        socket.emit("get_token", result.apitoken);
                     } else {
                         // Don't do anything if the user is not found
                         console.log('User not found!');

@@ -7,124 +7,135 @@
 
     <script src="/javascript/jquery.immybox.js"></script>
     <link rel='stylesheet' type='text/css' href="/style/immybox.css">
-
 </head>
 
-<h4>Register Vehicle</h4>
-
-<div class="page-content">
-
-    <div class="forms-grid">
-
-        <div class="forms vname">
-            <form action="#">
-                <h5>Vehicle Name</h5>
-                <div class="mdl-textfield mdl-js-textfield" id="div_vehiclename">
-                    <input class="mdl-textfield__input" type="text" id="in_vehiclename" pattern="[A-Za-z0-9\-\s()]+">
-                    <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
-                    <span class="mdl-textfield__error">Input is not a valid name!</span>
-                </div>
-            </form>
-
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="./" class="mdl-layout__tab">Front page</a>
+            <a href="/apiwiki" class="mdl-layout__tab is-active">API</a>
+            <a href="/about" class="mdl-layout__tab">About</a>
         </div>
+    </header>
 
-        <div class="forms region">
+    <main class="mdl-layout__content">
+        <h4>Register Vehicle</h4>
 
-            <h5>Region</h5>
-            <p>
-                The region/server that the license plate will be based on.
-            </p>
+        <div class="page-content">
 
-            <div class="mdl-textfield mdl-js-textfield" id="div_region">
-                <input id="in_region" type="text" class="mdl-textfield__input">
-                <!-- <label class="mdl-textfield__label" for="in_region">Region</label> -->
-                <span class="mdl-textfield__error">Please select a region</span>
+            <div class="forms-grid">
+
+                <div class="forms vname">
+                    <form action="#">
+                        <h5>Vehicle Name</h5>
+                        <div class="mdl-textfield mdl-js-textfield" id="div_vehiclename">
+                            <input class="mdl-textfield__input" type="text" id="in_vehiclename" pattern="[A-Za-z0-9\-\s()]+">
+                            <label class="mdl-textfield__label" for="sample1">Vehicle Name</label>
+                            <span class="mdl-textfield__error">Input is not a valid name!</span>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="forms region">
+
+                    <h5>Region</h5>
+                    <p>
+                        The region/server that the license plate will be based on.
+                    </p>
+
+                    <div class="mdl-textfield mdl-js-textfield" id="div_region">
+                        <input id="in_region" type="text" class="mdl-textfield__input">
+                        <!-- <label class="mdl-textfield__label" for="in_region">Region</label> -->
+                        <span class="mdl-textfield__error">Please select a region</span>
+                    </div>
+
+                </div>
+
+                <div class="forms images">
+
+                    <form action="#">
+                        <h5>Images</h5>
+
+                        <p>
+                            Add online hosted images to showcase your vehicle
+                        </p>
+
+                        <div class="imagefields">
+                        </div>
+
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="forms desc">
+                    <form action="#">
+                        <h5>Description</h5>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="3" id="in_description"></textarea>
+                            <label class="mdl-textfield__label" for="sample5">Description...</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="forms country">
+
+                    <h5>Country</h5>
+                    <p>
+                        The country that the license plate will be based on.
+                    </p>
+
+                    <div class="mdl-textfield mdl-js-textfield" id="div_country">
+                        <input id="in_country" type="text" class="mdl-textfield__input">
+                        <!-- <label class="mdl-textfield__label" for="in_country">Country</label> -->
+                        <span class="mdl-textfield__error">Please select a country</span>
+                    </div>
+
+                </div>
+
+                <div class="forms owners">
+                    <form action="#">
+                        <h5>Co-owner(s)</h5>
+
+                        <p>
+                            (Optional) Add people that also own the vehicle. Uses steamid64.
+                        </p>
+
+                        <div class="co-owners">
+                        </div>
+
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addco-owner">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </form>
+
+                </div>
+
             </div>
 
         </div>
 
-        <div class="forms images">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
+            register
+        </button>
 
-            <form action="#">
-                <h5>Images</h5>
-
+        <dialog id="terms" class="mdl-dialog">
+            <div class="mdl-dialog__content">
                 <p>
-                    Add online hosted images to showcase your vehicle
+                    I understand that uploading any form of explicit, or other unrelated content will result in the
+                    <span style="color: red;">termination</span> of my on-site account, and that such actions cannot be repealed.
                 </p>
-
-                <div class="imagefields">
-                </div>
-
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addimagelinks">
-                    <i class="material-icons">add</i>
-                </button>
-            </form>
-
-        </div>
-
-        <div class="forms desc">
-            <form action="#">
-                <h5>Description</h5>
-                <div class="mdl-textfield mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" type="text" rows="3" id="in_description"></textarea>
-                    <label class="mdl-textfield__label" for="sample5">Description...</label>
-                </div>
-            </form>
-        </div>
-
-        <div class="forms country">
-
-            <h5>Country</h5>
-            <p>
-                The country that the license plate will be based on.
-            </p>
-
-            <div class="mdl-textfield mdl-js-textfield" id="div_country">
-                <input id="in_country" type="text" class="mdl-textfield__input">
-                <!-- <label class="mdl-textfield__label" for="in_country">Country</label> -->
-                <span class="mdl-textfield__error">Please select a country</span>
             </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Agree</button>
+                <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Disagree</button>
+            </div>
+        </dialog>
 
-        </div>
-
-        <div class="forms owners">
-            <form action="#">
-                <h5>Co-owner(s)</h5>
-
-                <p>
-                    (Optional) Add people that also own the vehicle. Uses steamid64.
-                </p>
-
-                <div class="co-owners">
-                </div>
-
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" id="addco-owner">
-                    <i class="material-icons">add</i>
-                </button>
-            </form>
-
-        </div>
-
-    </div>
-
+        <script src="javascript/register.js"></script>
+        <script src="javascript/registerdropdown.js"></script>
+    </main>
 </div>
-
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="registerbutton">
-    register
-</button>
-
-<dialog id="terms" class="mdl-dialog">
-    <div class="mdl-dialog__content">
-        <p>
-            I understand that uploading any form of explicit, or other unrelated content will result in the
-            <span style="color: red;">termination</span> of my on-site account, and that such actions cannot be repealed.
-        </p>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Agree</button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--primary">Disagree</button>
-    </div>
-</dialog>
-
-<script src="javascript/register.js"></script>
-<script src="javascript/registerdropdown.js"></script>
