@@ -1,13 +1,20 @@
 function Main() {
-    console.log("rdy");
 
-    if (typeof pageFile != 'undefined') {
+    // Update MDL objects
+    componentHandler.upgradeDom();
+
+    console.log("RDY");
+
+    function LoadInnerHTML(pageFile,objectID) { // objectID: the object in which the html file will be loaded; optional* default: #page-content
+
+        if (!pageFile) { return null; }
+        objectID = objectID || "#page-content";
         // Loads the required page
-        $("#page-content").load("/pages/" + pageFile + ".html");
+        $(objectID).load("/pages/" + pageFile + ".html");
 
-        // Update MDL objects
-        componentHandler.upgradeDom();
     }
+
+    LoadInnerHTML("loadquery");
 
 }
 
