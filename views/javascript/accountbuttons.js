@@ -1,9 +1,7 @@
 const socket = io.connect('/');
 
 function buttonTokenChange() {
-  if (confirm("Are you sure you want to change your API token?")) {
     socket.emit("change_token", apikey);
-  }
 }
 
 socket.emit('request_token', user);
@@ -33,9 +31,8 @@ function TermsDialog() {
   let agreeButton = $(actionButtons[0]);
   let disagreeButton = $(actionButtons[1]);
 
-  agreeButton.click(function () { //send registration data with this!
-    registerData();
-    dialogButton.onclick = buttonTokenChange; // Remove dialogue functionality from register button
+  agreeButton.click(function () { //send agreement to change token
+    buttonTokenChange();
   });
 
   disagreeButton.click(function () { //should redirect or something we'll decide later
