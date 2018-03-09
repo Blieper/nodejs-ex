@@ -121,7 +121,7 @@ exports.init = function (app, process) {
                             errorObject.region = "invalid";
                         }
 
-                        if (data.country == "nothing" || !data.country || countryList.indexOf(data.country) > -1) {
+                        if (data.country == "nothing" || !data.country || app.countryList.indexOf(data.country) > -1) {
                             hasError = true;
                             errorObject.country = "invalid";
                         }
