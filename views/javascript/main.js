@@ -19,6 +19,7 @@ function Main() {
     // This means the client won't see those ugly scripts :ok_hand:
     $(".predef").remove();
 
+    pageFile = undefined;
 }
 
 $(document).ready(Main);
