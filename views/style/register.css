@@ -10,7 +10,7 @@
     min-width: 800px;
 }
 
-.page-content {
+.forms {
     overflow-x: auto;
 }
 
@@ -22,10 +22,19 @@
 /*buttons */
 
 #registerbutton {
-    margin: 25px 0 25px 0;
-    background-color: rgb(33, 150, 243);
+    margin: 25px 0 25px auto;
     color: white;
-    float: right;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#previewbutton {
+    margin: 25px 0 25px auto;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 #addimagelinks, #addco-owner {

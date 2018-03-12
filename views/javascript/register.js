@@ -1,6 +1,8 @@
 // Get image/coowner cookies
 let Cookie_Images = Cookies.getJSON('images');
 let Cookie_Coowners = Cookies.getJSON('coowners');
+let Cookie_Name = Cookies.get('name');
+let Cookie_Description = Cookies.get('description');
 let Cookie_Dialogue = Cookies.get('dialogue');
 
 $(window).on("unload", function () {
@@ -23,6 +25,8 @@ $(window).on("unload", function () {
     }
 
     Cookies.set('coowners', data);
+    Cookies.set('name', $("#in_vehiclename").val());
+    Cookies.set('description', $("#in_description").val());     
 });
 
 $(document).ready(function () {
@@ -37,6 +41,16 @@ $(document).ready(function () {
             addCoOwner(i)
         }
     }
+
+    if (Cookie_Name) {
+        $('#in_vehiclename').val(Cookie_Name);
+        $('#in_vehiclename').parent().find('.mdl-textfield__label').html('');
+    }
+
+    if (Cookie_Description) {
+        $('#in_description').val(Cookie_Description);
+        $('#in_description').parent().find('.mdl-textfield__label').html('');
+    }   
 });
 
 let imageFields = $('.imagefields');
@@ -218,11 +232,6 @@ function createDataObject() {
     }
 
     return data;
-}
-
-// necessary thing to get html entities as opposed to literal symbols (will be serverside)
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 const socket = io.connect('/');
