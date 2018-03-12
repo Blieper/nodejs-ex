@@ -70,6 +70,7 @@ function addImageField(content) {
     $(removeBtn).addClass('mdl-js-button');
     $(removeBtn).addClass('mdl-button--raised');
     $(removeBtn).addClass('mdl-js-ripple-effect');
+    $(removeBtn).addClass('mdl-button--colored');
     $(removeBtn).html('remove');
     $(removeBtn).css({ "margin": "10px" });
     $(removeBtn).click(function () {
@@ -124,6 +125,7 @@ function addCoOwner(content) {
     $(removeBtn).addClass('mdl-js-button');
     $(removeBtn).addClass('mdl-button--raised');
     $(removeBtn).addClass('mdl-js-ripple-effect');
+    $(removeBtn).addClass('mdl-button--colored');
     $(removeBtn).html('remove');
     $(removeBtn).css({ "margin": "10px" });
 
