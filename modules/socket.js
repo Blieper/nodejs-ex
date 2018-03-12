@@ -15,6 +15,13 @@ exports.init = function (app, process) {
         app.countryList.push({ text: i.trim(), value: i.trim() });
     }
 
+    app.regionlist = [
+        { text: 'Cre8ive', value: 'Cre8ive' },
+        { text: 'Daemon Effect', value: 'Daemon Effect' },
+        { text: 'Vehicle Heaven', value: 'Vehicle Heaven' },
+        { text: 'Genesis Build', value: 'Genesis Build' },
+    ];
+
     server.listen(app.port, app.ip, function () { // or define ip and port manually   
         var io = require('socket.io')(server);
 
@@ -71,14 +78,7 @@ exports.init = function (app, process) {
             })
 
             socket.on("request_registerdata", data => {
-                regions = [
-                    { text: 'Cre8ive', value: 'Cre8ive' },
-                    { text: 'Daemon Effect', value: 'Daemon Effect' },
-                    { text: 'Vehicle Heaven', value: 'Vehicle Heaven' },
-                    { text: 'Genesis Build', value: 'Genesis Build' },
-                ];
-
-                socket.emit('get_registerdata', {regions: regions, countries: app.countryList});
+                socket.emit('get_registerdata', {regions: app.regionlist, countries: app.countryList});
             });
 
             socket.on("register_vehicle", data => {
@@ -116,12 +116,15 @@ exports.init = function (app, process) {
                             errorObject.invalidSteamids.push(id);
                         }
 
-                        if (data.region == "nothing" || !data.region) {
+                        let foundRegion = app.regionlist.findIndex(i => i.value === data.region);
+                        let foundCountry = app.countryList.findIndex(i => i.value === data.country);
+                        
+                        if (data.region == "nothing" || !data.region || foundRegion === -1) {
                             hasError = true;
                             errorObject.region = "invalid";
                         }
 
-                        if (data.country == "nothing" || !data.country || app.countryList.indexOf(data.country) > -1) {
+                        if (data.country == "nothing" || !data.country || foundCountry === -1) {
                             hasError = true;
                             errorObject.country = "invalid";
                         }
