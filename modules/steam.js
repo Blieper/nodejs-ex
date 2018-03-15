@@ -80,7 +80,7 @@ exports.init = function (app, process) {
                 res.render('main.html', {
                     requser: JSON.stringify(req.user),
                     isLoggedIn: req.user !== null,
-                    pagefile: 'account'
+                    pagefile: 'account/account'
                 });
             }
         });
@@ -88,7 +88,7 @@ exports.init = function (app, process) {
 
     // Register page
     app.get("/register", ensureAuthenticated, function (req, res) {
-        res.render('main.html', { pagefile: 'register', isLoggedIn: req.user != null});
+        res.render('main.html', { pagefile: 'register/register', requser: JSON.stringify(req.user), isLoggedIn: req.user != null});
     });
 
     app.get('/logout', function (req, res) {

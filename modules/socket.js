@@ -77,6 +77,21 @@ exports.init = function (app, process) {
                 });
             })
 
+            socket.on("request_steamowners", data => {
+                request({
+                    uri: 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=10B1849DB0B2137A8F84489F2B570AA9&steamids=' + data.join(),
+                    method: 'GET',
+                    json: true
+                }, function (error, response, body) {
+                    if (error) console.log(error);
+                    else {
+                        let players = body.response.players;
+ 
+                        socket.emit('get_steamowners',players)
+                    }
+                });
+            });          
+
             socket.on("request_registerdata", data => {
                 socket.emit('get_registerdata', {regions: app.regionlist, countries: app.countryList});
             });

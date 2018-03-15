@@ -37,15 +37,15 @@ app.use(
 
 app.use(express.static(__dirname + "/../../public"));
 
-// Static path for css
-app.use("/style", express.static(__dirname + "/views/style/"));
-// Static path for clientside javascript
-app.use("/javascript", express.static(__dirname + "/views/javascript/"));
+
 // Static path for html files
 app.use("/pages", express.static(__dirname + "/views/pages/"));
-// Static path for images
-app.use("/img", express.static(__dirname + "/views/img/"));
-
+// Static path for common items
+app.use("/common", express.static(__dirname + "/views/common/"));
+// Static path for views items
+app.use("/", express.static(__dirname + "/views/"));
+// Static path for common images
+app.use("/img", express.static(__dirname + "/views/common/img"));
 
 
 // ------------------------------------------------------ //
@@ -75,7 +75,7 @@ app.get("/test", function (req, res) {
 
 // About page
 app.get("/about", function (req, res) {
-  res.render("about.html", { isLoggedIn: req.user != null });
+  res.render("main.html", { isLoggedIn: req.user != null });
 });
 
 

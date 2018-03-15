@@ -1,13 +1,13 @@
 <head>
-    <link rel="stylesheet" href="/style/register.css" />
-    <link rel="stylesheet" href="/style/carinfo.css" />
+    <link rel="stylesheet" href="/pages/register/style/register.css" />
+    <link rel="stylesheet" href="/common/style/carinfo.css" />
 
     <!-- stuff needed for dialog panel -->
-    <script src="style/dialog-polyfill/dialog-polyfill.js"></script>
-    <link rel="stylesheet" href="/style/dialog-polyfill/dialog-polyfill.css" />
+    <script src="/common/style/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" href="/common/style/dialog-polyfill/dialog-polyfill.css" />
 
-    <script src="/javascript/jquery.immybox.js"></script>
-    <link rel='stylesheet' type='text/css' href="/style/immybox.css">
+    <script src="/common/javascript/jquery.immybox.js"></script>
+    <link rel='stylesheet' type='text/css' href="/common/style/immybox.css">
 </head>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -111,6 +111,15 @@
 
                 </div>
 
+                <div class="forms ftags">
+                    <form action="#">
+                        <h5>Tags</h5>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="2" id="in_tags"></textarea>
+                            <label class="mdl-textfield__label" for="sample5">Tags seperated by commas...</label>
+                        </div>
+                    </form>
+                </div>
             </div>
 
         </div>
@@ -142,8 +151,8 @@
             </div>
         </dialog>
 
-        <script src="javascript/register.js"></script>
-        <script src="javascript/registerdropdown.js"></script>
-        <script src="javascript/registerpreview.js"></script>
+        <script src="/pages/register/javascript/register.js"></script>
+        <script src="/pages/register/javascript/registerdropdown.js"></script>
+        <script src="/pages/register/javascript/registerpreview.js"></script>
     </main>
 </div>

@@ -4,6 +4,7 @@ let Cookie_Coowners = Cookies.getJSON('coowners');
 let Cookie_Name = Cookies.get('name');
 let Cookie_Description = Cookies.get('description');
 let Cookie_Dialogue = Cookies.get('dialogue');
+let Cookie_Tags = Cookies.get('tags');
 
 $(window).on("unload", function () {
     let data = [];
@@ -26,7 +27,8 @@ $(window).on("unload", function () {
 
     Cookies.set('coowners', data);
     Cookies.set('name', $("#in_vehiclename").val());
-    Cookies.set('description', $("#in_description").val());     
+    Cookies.set('description', $("#in_description").val());  
+    Cookies.set('tags', $("#in_tags").val());        
 });
 
 $(document).ready(function () {
@@ -51,6 +53,11 @@ $(document).ready(function () {
         $('#in_description').val(Cookie_Description);
         $('#in_description').parent().find('.mdl-textfield__label').html('');
     }   
+
+    if (Cookie_Tags) {
+        $('#in_tags').val(Cookie_Tags);
+        $('#in_tags').parent().find('.mdl-textfield__label').html('');
+    }       
 });
 
 let imageFields = $('.imagefields');
@@ -215,6 +222,17 @@ function createDataObject() {
 
     data.region = document.getElementById("in_region") ? document.getElementById("in_region").value : "nothing";
     data.country = document.getElementById("in_country") ? document.getElementById("in_country").value : "nothing";
+
+    let tags = document.getElementById("in_tags").value.split(/,/);
+    data.tags = [];
+
+    for (i in tags) {
+        let tag = tags[i].trim().toLowerCase();
+        
+        if (data.tags.indexOf(tag) === -1) {
+            data.tags.push(tag);
+        }
+    }
 
     data.images = [];
     data.coowners = [];
