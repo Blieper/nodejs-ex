@@ -30,7 +30,8 @@ exports.init = function (app) {
             images: 1,
             coowners: 1,
             specs: 1,
-            license: 1
+            license: 1,
+            owner: 1
         },
             function (err, result) {
                 if (err) throw err;

@@ -2,6 +2,8 @@
 const socket = io.connect('/');
 
 function getOwners (owners) {
+    console.log(owners);
+
     socket.emit("request_steamowners",owners);
 }
 
@@ -9,9 +11,10 @@ let steamOwners = [];
 
 socket.on("get_steamowners", data => {
     steamOwners = data;
-    steamOwners.push(user);
 
-    let names = []
+    let names = [];
+
+    console.log(steamOwners);
 
     for (i of steamOwners) {
         names.push(i.personaname || i.displayName);
@@ -27,7 +30,7 @@ socket.on("get_steamowners", data => {
 function generateView() {
     let data = extra;
 
-    console.log(JSON.stringify(data))
+    console.log(data)
 
     let preview = $('#view');
     $(preview).empty();
@@ -58,7 +61,7 @@ function generateView() {
     $(preview).append(imgdiv);
     $(preview).append('<div class="carowners"><h5 id="h_owners">Owner</h5></div>');
     $(preview).append('<h5>License</h5>');
-    $(preview).append("XX-XX-XXXX");
+    $(preview).append(data.license);
     if (data.manufacturer) {
         if (data.manufacturer.length) {
             $(preview).append('<h5>Manufacturer</h5>');
@@ -87,9 +90,10 @@ function generateView() {
         $('.tags').append('<h6>' + data.tags.join().replace(/,\s*/g,', ') + '</h6>')
     }
 
-    getOwners (data.coowners)
+    let ownrs = data.coowners;
+    ownrs.push(data.owner);
 
-    console.log(data);
+    getOwners (ownrs)
 }
 
 console.log(extra);
