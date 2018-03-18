@@ -60,6 +60,8 @@ function generatePreview() {
     $(preview).append(header);
     $(preview).append(imgdiv);
     $(preview).append('<div class="carowners"><h5 id="h_owners">Owner</h5></div>');
+    $(preview).append('<h5>License</h5>');
+    $(preview).append("XX-XX-XXXX");
     if (data.manufacturer.length) {
         $(preview).append('<h5>Manufacturer</h5>');
         $(preview).append('<h6>' + data.manufacturer + '</h6>');

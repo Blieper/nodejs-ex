@@ -2,6 +2,10 @@
     height: 900px;
 }
 
+.page-content{
+    height: 100px;    
+}
+
 .forms-grid {
     display: grid;
     grid-template: 1fr / 1fr 1fr 1fr;
@@ -23,6 +27,10 @@
 
 .region {
     overflow: hidden;
+}
+
+.body{
+    overflow: none;
 }
 
 /*buttons */
