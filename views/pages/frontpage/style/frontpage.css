@@ -1,0 +1,10 @@
+.demo-card-square.mdl-card {
+    text-decoration: none;
+}
+
+.demo-card-square>.mdl-card__title {
+    color: #fff;
+    background-size:     cover; 
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}

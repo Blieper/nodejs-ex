@@ -126,6 +126,11 @@ exports.init = function (app, process) {
                         validData.images = data.images;
                         validData.coowners = data.coowners;
                         validData.specs = [];
+                        validData.owner = data.owner;
+
+                        if (data.owner.length === 0) {
+                            hasError = true;
+                        }
 
                         for (pl of players) {
                             let id = pl.steamid;
@@ -223,7 +228,8 @@ exports.init = function (app, process) {
                                     images: validData.images,
                                     coowners: validData.coowners,
                                     specs: validData.specs,
-                                    license: newlicense
+                                    license: newlicense,
+                                    owner: validData.owner
                                 }
 
                                 dbo.collection('vehicles').insertOne(doc, function (err, res) {

@@ -296,6 +296,8 @@ function TermsDialog() {
 
 $(document).ready(TermsDialog);
 
+console.log(user);
+
 function createDataObject() {
     let data = {};
 
@@ -309,6 +311,7 @@ function createDataObject() {
     data.images = [];
     data.coowners = [];
     data.specs = [];
+    data.owner = user.id || "";
 
     for (i of document.getElementsByClassName("in_image")) {
         if (i.value.length > 0) {

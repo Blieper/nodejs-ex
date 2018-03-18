@@ -14,10 +14,9 @@ try {
 
   app.baseURL = "http://localhost:" + app.port + "/";
 } catch (ex) {
-  app.mongoURL =
-    "mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
-  app.baseURL =
-    "http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/";
+  //app.mongoURL = "mongodb://userBU7:uVB410wyBTMnbbul@172.30.64.238:27017/sampledb";
+  app.mongoURL = "mongodb://admin:popo@ds012188.mlab.com:12188/sampledb";
+  app.baseURL = "http://nodejs-mongo-persistent-gmodcarregistration.193b.starter-ca-central-1.openshiftapps.com/";
 
   app.port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
   app.ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0";
@@ -66,7 +65,10 @@ app.get("/", function (req, res) {
     app.initDb(function (err) { });
   }
 
-  res.render("main.html", { isLoggedIn: req.user != null });
+  //res.render("main.html", { pagefile: 'loadquery', isLoggedIn: req.user != null });
+
+  res.writeHead(302, {'Location': app.baseURL + 'frontpage'});
+  res.end();
 });
 
 // About page

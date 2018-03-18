@@ -17,14 +17,11 @@ exports.init = function (app) {
 
         // get database
         let dbo = app.db.db("sampledb");
-
         let license = queried.license;
 
-        console.log(license);
-
         // try to find the user in the database
-        dbo.collection("vehicles").findOne({ license: license }, { 
-            _id: 0, 
+        dbo.collection("vehicles").findOne({ license: license }, {
+            _id: 0,
             name: 1,
             description: 1,
             region: 1,
@@ -39,11 +36,45 @@ exports.init = function (app) {
                 if (err) throw err;
 
                 if (result) {
-                    res.render('main.html', { 
-                        pagefile: 'vehicle/vehicle', 
-                        isLoggedIn: req.user != null, 
-                        requser: JSON.stringify(req.user), 
-                        extra: JSON.stringify(result) 
+                    res.render('main.html', {
+                        pagefile: 'vehicle/vehicle',
+                        isLoggedIn: req.user != null,
+                        requser: JSON.stringify(req.user),
+                        extra: JSON.stringify(result)
+                    });
+                } else {
+                    res.send("Not found!");
+                }
+            }
+        );
+    });
+
+    app.get("/frontpage", function (req, res) {
+
+        // try to initialize the db on every request if it's not already
+        // initialized.
+        if (!app.db) {
+            app.initDb(function (err) { });
+        }
+
+        // get database
+        let dbo = app.db.db("sampledb");
+
+        // try to find the user in the database
+        dbo.collection("vehicles").find({}).toArray(
+            function (err, result) {
+                if (err) throw err;
+
+                if (result) {
+                    let tosend = {};
+                    tosend.vehicles = result;
+                    tosend.url = app.baseURL;
+
+                    res.render('main.html', {
+                        pagefile: 'frontpage/frontpage',
+                        isLoggedIn: req.user != null,
+                        requser: JSON.stringify(req.user),
+                        extra: JSON.stringify(tosend)
                     });
                 } else {
                     res.send("Not found!");
