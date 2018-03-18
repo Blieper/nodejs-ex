@@ -112,9 +112,13 @@ exports.init = function (app, process) {
                         let players = body.response.players;
                         let idsCopy = data.coowners.slice();
 
+                        function htmlEntities(str) {
+                            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/\n/g, '<br/>');
+                        }
+                        
                         let validData = {};
                         validData.name = data.name;
-                        validData.description = data.description;
+                        validData.description = htmlEntities(data.description);
                         validData.region = data.region;
                         validData.country = data.country;
                         validData.tags = [];

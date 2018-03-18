@@ -60,6 +60,10 @@ function generatePreview() {
     $(preview).append(header);
     $(preview).append(imgdiv);
     $(preview).append('<div class="carowners"><h5 id="h_owners">Owner</h5></div>');
+    if (data.manufacturer.length) {
+        $(preview).append('<h5>Manufacturer</h5>');
+        $(preview).append('<h6>' + data.manufacturer + '</h6>');
+    }
     $(preview).append("<hr>");
     $(preview).append('<h5>Description</h5>');
     $(preview).append(description);
@@ -74,7 +78,7 @@ function generatePreview() {
         $(preview).append(stats);
     }
 
-    if (data.tags.split(/,/).length) {
+    if (data.tags.split(/,/).length > 0 && data.tags.trim().length > 0) {
         $(preview).append('<div class="tags"><h5 id="h_tags">Tag</h5></div>');
 
         $('.tags').empty();

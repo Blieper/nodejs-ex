@@ -1,4 +1,6 @@
-
+.mdl-layout__content {
+    height: 900px;
+}
 
 .forms-grid {
     display: grid;
@@ -17,6 +19,10 @@
 
 .mdl-textfield {
     width: 100%;
+}
+
+.region {
+    overflow: hidden;
 }
 
 /*buttons */

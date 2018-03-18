@@ -305,6 +305,7 @@ function createDataObject() {
     data.region = document.getElementById("in_region") ? document.getElementById("in_region").value : "nothing";
     data.country = document.getElementById("in_country") ? document.getElementById("in_country").value : "nothing";
     data.tags = document.getElementById("in_tags").value;
+    data.manufacturer = document.getElementById("in_manufacturer").value;
     data.images = [];
     data.coowners = [];
     data.specs = [];
