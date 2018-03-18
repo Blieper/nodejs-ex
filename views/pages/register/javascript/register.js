@@ -5,6 +5,8 @@ let Cookie_Name = Cookies.get('name');
 let Cookie_Description = Cookies.get('description');
 let Cookie_Dialogue = Cookies.get('dialogue');
 let Cookie_Tags = Cookies.get('tags');
+let Cookie_Specs = Cookies.getJSON('specs');
+let Cookie_Manufacturer = Cookies.get('manu');
 
 $(window).on("unload", function () {
     let data = [];
@@ -26,9 +28,20 @@ $(window).on("unload", function () {
     }
 
     Cookies.set('coowners', data);
+
+    data = [];
+
+    for (i of document.getElementsByClassName("in_spec")) {
+        if (i.value.length > 0) {
+            data.push(i.value);
+        }
+    }
+
+    Cookies.set('specs', data);
     Cookies.set('name', $("#in_vehiclename").val());
     Cookies.set('description', $("#in_description").val());  
-    Cookies.set('tags', $("#in_tags").val());        
+    Cookies.set('tags', $("#in_tags").val());  
+    Cookies.set('manu', $("#in_manufacturer").val());           
 });
 
 $(document).ready(function () {
@@ -41,6 +54,12 @@ $(document).ready(function () {
     if (Cookie_Coowners && Cookie_Coowners instanceof Array) {
         for (i of Cookie_Coowners) {
             addCoOwner(i)
+        }
+    }
+
+    if (Cookie_Specs && Cookie_Specs instanceof Array) {
+        for (i of Cookie_Specs) {
+            addSpec(i)
         }
     }
 
@@ -57,11 +76,17 @@ $(document).ready(function () {
     if (Cookie_Tags) {
         $('#in_tags').val(Cookie_Tags);
         $('#in_tags').parent().find('.mdl-textfield__label').html('');
-    }       
+    }   
+    
+    if (Cookie_Manufacturer) {
+        $('#in_manufacturer').val(Cookie_Manufacturer);
+        $('#in_manufacturer').parent().find('.mdl-textfield__label').html('');
+    }      
 });
 
 let imageFields = $('.imagefields');
 let cOwnerFields = $('.co-owners');
+let specFields = $('.specs');
 
 function addImageField(content) {
 
@@ -171,9 +196,66 @@ function addCoOwner(content) {
     componentHandler.upgradeDom();
 }
 
+function addSpec(content) {
+    let d = document.createElement('div');
+    $(d).addClass('specField');
+
+    let textField = document.createElement('div');
+    $(textField).addClass('mdl-textfield');
+    $(textField).addClass('mdl-js-textfield');
+    $(textField).css({ "width": "70%" })
+
+    let input = document.createElement('input');
+    $(input).addClass('mdl-textfield__input');
+    $(input).addClass('in_spec');
+    $(input).attr('type', 'text');
+    $(input).attr('pattern', "7656119(\\d{10})");
+
+    if (content) {
+        $(input).val(content);
+    }
+
+    let label = document.createElement('label');
+    $(label).addClass('mdl-textfield__label');
+    $(label).html('spec: value');
+
+    let error = document.createElement('span');
+    $(error).addClass('mdl-textfield__error');
+    $(error).html('Input could not be parsed!');
+
+    let removeBtn = document.createElement('button');
+    $(removeBtn).addClass('mdl-button');
+    $(removeBtn).addClass('mdl-js-button');
+    $(removeBtn).addClass('mdl-button--raised');
+    $(removeBtn).addClass('mdl-js-ripple-effect');
+    $(removeBtn).addClass('mdl-button--colored');
+    $(removeBtn).html('remove');
+    $(removeBtn).css({ "margin": "10px" });
+
+    $(removeBtn).click(function () {
+        $(d).slideToggle(200, function () {
+            d.remove();
+        });
+    });
+
+    $(textField).append(input);
+    $(textField).append(label);
+    $(textField).append(error);
+
+    $(d).append(textField);
+    $(d).append(removeBtn);
+
+    $(specFields).append(d);
+
+    $(d).hide();
+    $(d).slideToggle(200);
+
+    componentHandler.upgradeDom();
+}
 
 $('#addimagelinks').click(function () { addImageField(); });
 $('#addco-owner').click(function () { addCoOwner(); });
+$('#addspec').click(function () { addSpec(); });
 
 function TermsDialog() {
     let dialogButton = document.querySelector('#registerbutton');
