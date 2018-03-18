@@ -22,7 +22,7 @@ exports.generateUniqueToken = function (testToken, app, callback) {
             console.log('Found existing token!')
             testToken = generateToken();
 
-            generateUniqueToken(testToken, callback);
+            exports.generateUniqueToken(testToken, callback);
         } else {
             console.log('Made unique token!')
 

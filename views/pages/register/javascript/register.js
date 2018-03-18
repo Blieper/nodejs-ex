@@ -397,3 +397,8 @@ socket.on("register_error", errorData => {
         $(element).addClass('is-invalid');
     }      
 });
+
+socket.on("get_license", license => {
+    console.log(license);
+    window.location.replace(license)
+});

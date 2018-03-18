@@ -25,6 +25,10 @@
         <script class="predef">var user = <%- requser%>;</script>        
     <% } %>
 
+    <% if (typeof extra != 'undefined') { %>
+        <script class="predef">var extra = <%- extra%>;</script>        
+    <% } %>
+
     <script src="/common/javascript/main.js"></script>
     
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>

@@ -70,3 +70,28 @@ exports.generateLicenseCode = function (serverName) {
 
     return returnName.toUpperCase();
 }
+
+exports.generateUniqueLicense = function (region, testLicense, app, callback) {
+    // get database
+    let dbo = app.db.db('sampledb');
+
+    console.log('License: ' + testLicense);
+
+    // try to find 'testToken'
+    dbo.collection('vehicles').findOne({ license: testLicense }, { _id: 0, license: 1 }, function (err, result) {
+        if (err) throw err;
+
+        if (result) {
+            // tested token exists, try to make a new one
+            console.log('Found existing token!')
+            testLicense = exports.generateLicenseCode(region);
+
+            exports.generateUniqueLicense(testLicense, callback);
+        } else {
+            console.log('Made unique license!')
+
+            // tested token is unique; fire callback with the new token
+            callback(testLicense);
+        }
+    });
+}

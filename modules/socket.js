@@ -3,7 +3,8 @@
 exports.init = function (app, process) {
     let token = require('./token'),
         server = require('http').createServer(app),
-        request = require('request');
+        request = require('request'),
+        licensing = require('./licensing');
 
     let countries = "Afghanistan, Albania, Algeria, Andorra, Angola, Antigua & Deps, Argentina, Armenia, Australia, Austria, Azerbaijan, Bahamas, Bahrain, Bangladesh, Barbados, Belarus, Belgium, Belize, Benin, Bhutan, Bolivia, Bosnia Herzegovina, Botswana, Brazil, Brunei, Bulgaria, Burkina, Burma, Burundi, Cambodia, Cameroon, Canada, Cape Verde, Central African Rep, Chad, Chile, People's Republic of China, Republic of China, Colombia, Comoros, Democratic Republic of the Congo, Republic of the Congo, Costa Rica,, Croatia, Cuba, Cyprus, Czech Republic, Danzig, Denmark, Djibouti, Dominica, Dominican Republic, East Timor, Ecuador, Egypt, El Salvador, Equatorial Guinea, Eritrea, Estonia, Ethiopia, Fiji, Finland, France, Gabon, Gaza Strip, The Gambia, Georgia, Germany, Ghana, Greece, Grenada, Guatemala, Guinea, Guinea-Bissau, Guyana, Haiti, Holy Roman Empire, Honduras, Hungary, Iceland, India, Indonesia, Iran, Iraq, Republic of Ireland, Israel, Italy, Ivory Coast, Jamaica, Japan, Jonathanland, Jordan, Kazakhstan, Kenya, Kiribati, North Korea, South Korea, Kosovo, Kuwait, Kyrgyzstan, Laos, Latvia, Lebanon, Lesotho, Liberia, Libya, Liechtenstein, Lithuania, Luxembourg, Macedonia, Madagascar, Malawi, Malaysia, Maldives, Mali, Malta, Marshall Islands, Mauritania, Mauritius, Mexico, Micronesia, Moldova, Monaco, Mongolia, Montenegro, Morocco, Mount Athos, Mozambique, Namibia, Nauru, Nepal, Newfoundland, Netherlands, New Zealand, Nicaragua, Niger, Nigeria, Norway, Oman, Ottoman Empire, Pakistan, Palau, Panama, Papua New Guinea, Paraguay, Peru, Philippines, Poland, Portugal, Prussia, Qatar, Romania, Rome, Russian Federation, Rwanda, St Kitts & Nevis, St Lucia, Saint Vincent & the, Grenadines, Samoa, San Marino, Sao Tome & Principe, Saudi Arabia, Senegal, Serbia, Seychelles, Sierra Leone, Singapore, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, Spain, Sri Lanka, Sudan, Suriname, Swaziland, Sweden, Switzerland, Syria, Tajikistan, Tanzania, Thailand, Togo, Tonga, Trinidad & Tobago, Tunisia, Turkey, Turkmenistan, Tuvalu, Uganda, Ukraine, United Arab Emirates, United Kingdom, United States of America,  Uruguay, Uzbekistan, Vanuatu, Vatican City, Venezuela, Vietnam, Yemen, Zambia, Zimbabwe";
 
@@ -86,18 +87,18 @@ exports.init = function (app, process) {
                     if (error) console.log(error);
                     else {
                         let players = body.response.players;
- 
-                        socket.emit('get_steamowners',players)
+
+                        socket.emit('get_steamowners', players)
                     }
                 });
-            });          
+            });
 
             socket.on("request_registerdata", data => {
-                socket.emit('get_registerdata', {regions: app.regionlist, countries: app.countryList});
+                socket.emit('get_registerdata', { regions: app.regionlist, countries: app.countryList });
             });
 
             socket.on("register_vehicle", data => {
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
 
                 let hasError = false;
                 let errorObject = {};
@@ -115,7 +116,7 @@ exports.init = function (app, process) {
                         function htmlEntities(str) {
                             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/\n/g, '<br/>');
                         }
-                        
+
                         let validData = {};
                         validData.name = data.name;
                         validData.description = htmlEntities(data.description);
@@ -136,15 +137,15 @@ exports.init = function (app, process) {
                             }
                         }
 
-                        let tags = data.tags;
+                        let tags = data.tags.split(/,/);
 
                         for (i in tags) {
                             let tag = tags[i].trim().toLowerCase();
-                            
+
                             if (validData.tags.indexOf(tag) === -1) {
                                 validData.tags.push(tag);
                             }
-                        }                    
+                        }
 
                         for (i of data.specs) {
                             // Check if spec or value is whitespace
@@ -153,21 +154,25 @@ exports.init = function (app, process) {
                             if (spl.length !== 2) {
                                 hasError = true;
 
-                                if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; } 
+                                if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; }
                                 errorObject.invalidSpecs.push(i);
                             } else {
                                 for (j of spl) {
                                     if (j.trim().length === 0) {
                                         hasError = true;
 
-                                        if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; } 
-                                        errorObject.invalidSpecs.push(i);                                        
+                                        if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; }
+                                        errorObject.invalidSpecs.push(i);
                                     }
                                 }
 
-                                validData.specs[spl[0]] = spl[1];
-                            }                            
+                                console.log(spl);
+
+                                validData.specs.push({key:  spl[0].trim(),value: spl[1].trim() });
+                            }
                         }
+
+                        console.log(validData.specs);
 
                         if (idsCopy.length > 0) {
                             hasError = true;
@@ -180,7 +185,7 @@ exports.init = function (app, process) {
 
                         let foundRegion = app.regionlist.findIndex(i => i.value === data.region);
                         let foundCountry = app.countryList.findIndex(i => i.value === data.country);
-                        
+
                         if (data.region == "nothing" || !data.region || foundRegion === -1) {
                             hasError = true;
                             errorObject.region = "invalid";
@@ -196,10 +201,38 @@ exports.init = function (app, process) {
                             errorObject.name = "invalid";
                         }
 
+
                         if (hasError) {
                             socket.emit("register_error", errorObject);
                         } else {
                             // Succesful register
+
+                            console.log("Data is valid");
+                            // get database
+                            let dbo = app.db.db("sampledb");
+
+                            licensing.generateUniqueLicense(validData.region, licensing.generateLicenseCode(validData.region), app, function (newlicense) {
+                                console.log(newlicense);
+
+                                let doc = {
+                                    name: validData.name,
+                                    description: validData.description,
+                                    region: validData.region,
+                                    country: validData.country,
+                                    tags: validData.tags,
+                                    images: validData.images,
+                                    coowners: validData.coowners,
+                                    specs: validData.specs,
+                                    license: newlicense
+                                }
+
+                                dbo.collection('vehicles').insertOne(doc, function (err, res) {
+                                    if (err) throw err;
+                                    console.log("1 document inserted: \n" + res);
+                                });
+
+                                socket.emit("get_license", app.baseURL.substring(-1) + "browse?license=" + newlicense);
+                            });
                         }
                     }
                 });

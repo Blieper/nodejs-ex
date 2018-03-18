@@ -58,6 +58,7 @@ var steamAuthentication = require("./modules/steam").init(app, process);
 var mongo = require("./modules/mongo").init(app);
 var pagecounter = require("./modules/pagecount").init(app);
 var api = require("./modules/api").init(app);
+var vehicles = require("./modules/vehicles").init(app);
 
 // Main page
 app.get("/", function (req, res) {
