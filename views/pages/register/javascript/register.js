@@ -209,7 +209,7 @@ function addSpec(content) {
     $(input).addClass('mdl-textfield__input');
     $(input).addClass('in_spec');
     $(input).attr('type', 'text');
-    $(input).attr('pattern', "7656119(\\d{10})");
+    $(input).attr('pattern', "[A-Za-z\\d\\-\\s(),.]+:[A-Za-z\\d\\-\\s().,]+");
 
     if (content) {
         $(input).val(content);
@@ -304,20 +304,10 @@ function createDataObject() {
 
     data.region = document.getElementById("in_region") ? document.getElementById("in_region").value : "nothing";
     data.country = document.getElementById("in_country") ? document.getElementById("in_country").value : "nothing";
-
-    let tags = document.getElementById("in_tags").value.split(/,/);
-    data.tags = [];
-
-    for (i in tags) {
-        let tag = tags[i].trim().toLowerCase();
-        
-        if (data.tags.indexOf(tag) === -1) {
-            data.tags.push(tag);
-        }
-    }
-
+    data.tags = document.getElementById("in_tags").value;
     data.images = [];
     data.coowners = [];
+    data.specs = [];
 
     for (i of document.getElementsByClassName("in_image")) {
         if (i.value.length > 0) {
@@ -328,6 +318,12 @@ function createDataObject() {
     for (i of document.getElementsByClassName("in_coowner")) {
         if (i.value.length > 0) {
             data.coowners.push(i.value);
+        }
+    }
+
+    for (i of document.getElementsByClassName("in_spec")) {
+        if (i.value.length > 0) {
+            data.specs.push(i.value);
         }
     }
 
@@ -361,6 +357,25 @@ socket.on("register_error", errorData => {
                     $(tf).find('.mdl-textfield__input').change(function() {
                         $(this.parentElement).find('.mdl-textfield__error').html('Input is not a valid steamid!');
                     });
+                }
+            }
+        }
+    }
+
+    if (errorData.invalidSpecs) {
+        for (id of errorData.invalidSpecs) {
+            let textfields = $('.mdl-textfield');
+
+            for (tf of textfields) {
+                let firstChild = tf.firstChild;
+
+                if (firstChild.value === id) {
+                    firstChild.parentElement.className += ' is-invalid';
+
+                    // $(tf).find('.mdl-textfield__error').html('Given steamid does not correspond to existing account!');
+                    // $(tf).find('.mdl-textfield__input').change(function() {
+                    //     $(this.parentElement).find('.mdl-textfield__error').html('Input is not a valid steamid!');
+                    // });
                 }
             }
         }

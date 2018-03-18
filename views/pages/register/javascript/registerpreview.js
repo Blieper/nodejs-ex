@@ -49,11 +49,12 @@ function generatePreview() {
 
     $(description).html(htmlEntities(data.description));
 
+
     let stats = $("<ul class='mdl-list'></ul>");
-    stats.append('<li class="mdl-list__item">Kilometers driven: </li>');
-    stats.append('<li class="mdl-list__item">Engine: </li>');
-    stats.append('<li class="mdl-list__item">Props: </li>');
-    stats.append('<li class="mdl-list__item">Weight: </li>');
+
+    for (i of data.specs) {
+        stats.append('<li class="mdl-list__item">' + i + '</li>');
+    }
 
     $(preview).append("<hr>");
     $(preview).append(header);
@@ -66,14 +67,20 @@ function generatePreview() {
     $(preview).append('<h5>Region</h5>');
     $(preview).append('<h6>' + data.region + '</h6>');   
     $(preview).append('<h5>Country</h5>');
-    $(preview).append('<h6>' + data.country + '</h6>');      
-    $(preview).append('<h5>Stats</h5>');
-    $(preview).append(stats);
-    $(preview).append('<div class="tags"><h5 id="h_tags">Tag</h5></div>');
+    $(preview).append('<h6>' + data.country + '</h6>');     
 
-    $('.tags').empty();
-    $('.tags').append(data.tags.length > 1 ? '<h5 id="h_tags">Tags</h5>' : '<h5 id="h_tags">Tag</h5>')
-    $('.tags').append('<h6>' + data.tags.join().replace(/,\s*/g,', ') + '</h6>')
+    if (data.specs.length) {
+        $(preview).append('<h5>Specs</h5>');
+        $(preview).append(stats);
+    }
+
+    if (data.tags.split(/,/).length) {
+        $(preview).append('<div class="tags"><h5 id="h_tags">Tag</h5></div>');
+
+        $('.tags').empty();
+        $('.tags').append(data.tags.split(/,/).length > 1 ? '<h5 id="h_tags">Tags</h5>' : '<h5 id="h_tags">Tag</h5>')
+        $('.tags').append('<h6>' + data.tags.split(/,/).join().replace(/,\s*/g,', ') + '</h6>')
+    }
 
     getOwners (data.coowners)
 

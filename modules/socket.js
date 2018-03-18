@@ -112,6 +112,16 @@ exports.init = function (app, process) {
                         let players = body.response.players;
                         let idsCopy = data.coowners.slice();
 
+                        let validData = {};
+                        validData.name = data.name;
+                        validData.description = data.description;
+                        validData.region = data.region;
+                        validData.country = data.country;
+                        validData.tags = [];
+                        validData.images = data.images;
+                        validData.coowners = data.coowners;
+                        validData.specs = [];
+
                         for (pl of players) {
                             let id = pl.steamid;
 
@@ -120,6 +130,39 @@ exports.init = function (app, process) {
                                     idsCopy.splice(i, 1);
                                 }
                             }
+                        }
+
+                        let tags = data.tags;
+
+                        for (i in tags) {
+                            let tag = tags[i].trim().toLowerCase();
+                            
+                            if (validData.tags.indexOf(tag) === -1) {
+                                validData.tags.push(tag);
+                            }
+                        }                    
+
+                        for (i of data.specs) {
+                            // Check if spec or value is whitespace
+                            let spl = i.split(':');
+
+                            if (spl.length !== 2) {
+                                hasError = true;
+
+                                if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; } 
+                                errorObject.invalidSpecs.push(i);
+                            } else {
+                                for (j of spl) {
+                                    if (j.trim().length === 0) {
+                                        hasError = true;
+
+                                        if (!errorObject.invalidSpecs) { errorObject.invalidSpecs = []; } 
+                                        errorObject.invalidSpecs.push(i);                                        
+                                    }
+                                }
+
+                                validData.specs[spl[0]] = spl[1];
+                            }                            
                         }
 
                         if (idsCopy.length > 0) {
